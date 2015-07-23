@@ -38,7 +38,7 @@
 
 #include <ros_param_shortcuts/ros_param_utilities.h>
 
-namespace rviz_visual_tools
+namespace ros_param_utilities
 {
 
 bool getBoolParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
