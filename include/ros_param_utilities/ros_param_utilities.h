@@ -36,8 +36,8 @@
    Desc:   Helpers for loading parameters from the parameter server
 */
 
-#ifndef RVIZ_VISUAL_TOOLS__ROS_PARAM_UTILITIES
-#define RVIZ_VISUAL_TOOLS__ROS_PARAM_UTILITIES
+#ifndef ROS_PARAM_UTILITIES__ROS_PARAM_UTILITIES
+#define ROS_PARAM_UTILITIES__ROS_PARAM_UTILITIES
 
 // ROS
 #include <ros/ros.h>
