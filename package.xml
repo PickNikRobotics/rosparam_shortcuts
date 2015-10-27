@@ -1,16 +1,16 @@
 <?xml version="1.0"?>
 <package>
-  <name>ros_param_shortcuts</name>
+  <name>ros_param_utilities</name>
   <version>0.0.1</version>
-  <description>The ros_param_shortcuts package</description>
+  <description>The ros_param_utilities package</description>
 
   <maintainer email="davetcoleman@gmail.com">Dave Coleman</maintainer>
 
   <license>BSD</license>
 
-  <url type="website">https://github.com/davetcoleman/ros_param_shortcuts</url>
-  <url type="butracker">https://github.com/davetcoleman/ros_param_shortcuts/issues</url>
-  <url type="repository">https://github.com/davetcoleman/ros_param_shortcuts/</url>
+  <url type="website">https://github.com/davetcoleman/ros_param_utilities</url>
+  <url type="butracker">https://github.com/davetcoleman/ros_param_utilities/issues</url>
+  <url type="repository">https://github.com/davetcoleman/ros_param_utilities/</url>
 
   <author email="davetcoleman@gmail.com">Dave Coleman</author>
 

@@ -45,7 +45,7 @@
 // Eigen
 #include <Eigen/Geometry>
 
-namespace rviz_visual_tools
+namespace ros_param_utilities
 {
 
 // -------------------------------------------------------------------------------------------------
