@@ -84,6 +84,8 @@ bool getStringParameter(const std::string& parent_name, const ros::NodeHandle &n
 bool getStringParameters(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                          std::vector<std::string> &values);
 
+bool getDurationParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+                          ros::Duration &value);
 /**
  * \brief Output a string of values from an array for debugging
  * \param array of values

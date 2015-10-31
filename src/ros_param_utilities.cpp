@@ -180,6 +180,25 @@ bool getStringParameters(const std::string& parent_name, const ros::NodeHandle &
   return true;
 }
 
+bool getDurationParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+                          ros::Duration &value)
+{
+  double temp_value;
+  // Load a param
+  if (!nh.hasParam(param_name))
+  {
+    ROS_ERROR_STREAM_NAMED(parent_name,"Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+    return false;
+  }
+  nh.getParam(param_name, temp_value);
+  ROS_DEBUG_STREAM_NAMED(parent_name,"Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value " << value);
+
+  // Convert to ros::Duration
+  value = ros::Duration(temp_value);
+
+  return true;
+}
+
 std::string getDebugArrayString(std::vector<double> values)
 {
   std::stringstream debug_values;
