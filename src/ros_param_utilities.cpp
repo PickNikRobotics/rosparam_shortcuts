@@ -199,6 +199,30 @@ bool getDurationParameter(const std::string& parent_name, const ros::NodeHandle 
   return true;
 }
 
+bool getAffine3dParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+                          Eigen::Affine3d &value)
+{
+  std::vector<double> values;
+
+  // Load a param
+  if (!nh.hasParam(param_name))
+  {
+    ROS_ERROR_STREAM_NAMED(parent_name,"Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+    return false;
+  }
+  nh.getParam(param_name, values);
+
+  if (values.empty())
+    ROS_WARN_STREAM_NAMED(parent_name,"Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+
+  ROS_DEBUG_STREAM_NAMED(parent_name,"Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with values [" << getDebugArrayString(values) << "]");
+
+  // Convert to Eigen::Affine3d
+  convertDoublesToEigen(parent_name, values, value);
+
+  return true;
+}
+
 std::string getDebugArrayString(std::vector<double> values)
 {
   std::stringstream debug_values;

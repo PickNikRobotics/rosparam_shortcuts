@@ -86,6 +86,10 @@ bool getStringParameters(const std::string& parent_name, const ros::NodeHandle &
 
 bool getDurationParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                           ros::Duration &value);
+
+bool getAffine3dParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+                          Eigen::Affine3d &value);
+
 /**
  * \brief Output a string of values from an array for debugging
  * \param array of values
