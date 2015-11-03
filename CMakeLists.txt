@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(ros_param_utilities)
+project(ros_param_shortcuts)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -41,7 +41,7 @@ include_directories(
 
 # Visualization Tools Library
 add_library(${PROJECT_NAME}
-  src/ros_param_utilities.cpp
+  src/ros_param_shortcuts.cpp
 )
 
 target_link_libraries(${PROJECT_NAME}

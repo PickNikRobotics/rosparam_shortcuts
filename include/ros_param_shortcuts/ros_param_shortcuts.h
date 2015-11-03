@@ -45,7 +45,7 @@
 // Eigen
 #include <Eigen/Geometry>
 
-namespace ros_param_utilities
+namespace ros_param_shortcuts
 {
 
 // -------------------------------------------------------------------------------------------------
@@ -60,34 +60,34 @@ namespace ros_param_utilities
  * \param value - resulting loaded values, or no change if error (function returns false)
  * \return true on success
  */
-bool getBoolParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
+bool getBoolParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
                       bool &value);
 
 bool getBoolMap(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &params_namespace, 
                 std::map<std::string, bool> &parameters);
 
-bool getDoubleParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getDoubleParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                         double &value);
 
-bool getDoubleParameters(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getDoubleParams(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                          std::vector<double> &values);
 
-bool getIntParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
+bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
                      int &value);
 
-bool getIntParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
+bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
                      unsigned int &value);
 
-bool getStringParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getStringParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                         std::string &value);
 
-bool getStringParameters(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getStringParams(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                          std::vector<std::string> &values);
 
-bool getDurationParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getDurationParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                           ros::Duration &value);
 
-bool getAffine3dParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getAffine3dParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                           Eigen::Affine3d &value);
 
 /**

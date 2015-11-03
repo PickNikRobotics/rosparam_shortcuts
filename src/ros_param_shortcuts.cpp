@@ -36,12 +36,12 @@
    Desc:   Helpers for loading parameters from the parameter server
 */
 
-#include <ros_param_utilities/ros_param_utilities.h>
+#include <ros_param_shortcuts/ros_param_shortcuts.h>
 
-namespace ros_param_utilities
+namespace ros_param_shortcuts
 {
 
-bool getBoolParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getBoolParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                       bool &value)
 {
   // Load a param
@@ -79,7 +79,7 @@ bool getBoolMap(const std::string& parent_name, const ros::NodeHandle &nh, const
   return true;
 }
 
-bool getDoubleParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getDoubleParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                         double &value)
 {
   // Load a param
@@ -94,7 +94,7 @@ bool getDoubleParameter(const std::string& parent_name, const ros::NodeHandle &n
   return true;
 }
 
-bool getDoubleParameters(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getDoubleParams(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                          std::vector<double> &values)
 {
   // Load a param
@@ -113,7 +113,7 @@ bool getDoubleParameters(const std::string& parent_name, const ros::NodeHandle &
   return true;
 }
 
-bool getIntParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                      int &value)
 {
   // Load a param
@@ -128,7 +128,7 @@ bool getIntParameter(const std::string& parent_name, const ros::NodeHandle &nh, 
   return true;
 }
 
-bool getIntParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                      unsigned int &value)
 {
   // Load a param
@@ -145,7 +145,7 @@ bool getIntParameter(const std::string& parent_name, const ros::NodeHandle &nh, 
   return true;
 }
 
-bool getStringParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getStringParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                         std::string &value)
 {
   // Load a param
@@ -160,7 +160,7 @@ bool getStringParameter(const std::string& parent_name, const ros::NodeHandle &n
   return true;
 }
 
-bool getStringParameters(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getStringParams(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                          std::vector<std::string> &values)
 {
   // Load a param
@@ -180,7 +180,7 @@ bool getStringParameters(const std::string& parent_name, const ros::NodeHandle &
   return true;
 }
 
-bool getDurationParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getDurationParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                           ros::Duration &value)
 {
   double temp_value;
@@ -199,7 +199,7 @@ bool getDurationParameter(const std::string& parent_name, const ros::NodeHandle 
   return true;
 }
 
-bool getAffine3dParameter(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+bool getAffine3dParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                           Eigen::Affine3d &value)
 {
   std::vector<double> values;
