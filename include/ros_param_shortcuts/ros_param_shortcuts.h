@@ -78,6 +78,9 @@ bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, cons
 bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
                      unsigned int &value);
 
+bool getSizeTParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
+                   std::size_t &value);
+
 bool getStringParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                         std::string &value);
 

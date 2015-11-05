@@ -145,6 +145,23 @@ bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, cons
   return true;
 }
 
+bool getSizeTParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+                   std::size_t &value)
+{
+  // Load a param
+  if (!nh.hasParam(param_name))
+  {
+    ROS_ERROR_STREAM_NAMED(parent_name,"Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+    return false;
+  }
+  int nonsigned_value;
+  nh.getParam(param_name, nonsigned_value);
+  value = nonsigned_value;
+  ROS_DEBUG_STREAM_NAMED(parent_name,"Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value " << value);
+
+  return true;
+}
+
 bool getStringParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                         std::string &value)
 {
