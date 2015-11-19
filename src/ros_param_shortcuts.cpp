@@ -279,4 +279,14 @@ bool convertDoublesToEigen(const std::string& parent_name, std::vector<double> v
   return true;
 }
 
+void shutdownIfParamErrors(const std::string& parent_name, std::size_t error_count)
+{
+  if (!error_count)
+    return;
+
+  ROS_ERROR_STREAM_NAMED(parent_name, "Missing " << error_count << " ros parameters that are required. Shutting down to prevent undefined behaviors");
+  ros::shutdown();
+  exit(0);
+}
+
 } // end namespace

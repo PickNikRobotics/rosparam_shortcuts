@@ -60,10 +60,10 @@ namespace ros_param_shortcuts
  * \param value - resulting loaded values, or no change if error (function returns false)
  * \return true on success
  */
-bool getBoolParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
+bool getBoolParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                       bool &value);
 
-bool getBoolMap(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &params_namespace, 
+bool getBoolMap(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &params_namespace,
                 std::map<std::string, bool> &parameters);
 
 bool getDoubleParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
@@ -72,13 +72,13 @@ bool getDoubleParam(const std::string& parent_name, const ros::NodeHandle &nh, c
 bool getDoubleParams(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                          std::vector<double> &values);
 
-bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
+bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                      int &value);
 
-bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
+bool getIntParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                      unsigned int &value);
 
-bool getSizeTParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name, 
+bool getSizeTParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                    std::size_t &value);
 
 bool getStringParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
@@ -107,6 +107,12 @@ std::string getDebugArrayString(std::vector<std::string> values);
  * \return true on success
  */
 bool convertDoublesToEigen(const std::string& parent_name, std::vector<double> values, Eigen::Affine3d& transform);
+
+/**
+ * \brief Check that there were no errors, and if there were, shutdown
+ * \param error - total number of errors found
+ */
+void shutdownIfParamErrors(const std::string& parent_name, std::size_t error_count);
 
 } // end namespace
 
