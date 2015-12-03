@@ -14,6 +14,10 @@ Features:
  - Supports loading std::vectors easily, and debugging that data
  - Supports loading an entire list of bool parameters
 
+Developed by [Dave Coleman](http://dav.ee/) at the University of Colorado Boulder
+
+Status:
+
  * [![Build Status](https://travis-ci.org/davetcoleman/rosparam_shortcuts.svg)](https://travis-ci.org/davetcoleman/rosparam_shortcuts) Travis CI
  * [![Devel Job Status](http://jenkins.ros.org/buildStatus/icon?job=devel-indigo-my-package)](http://jenkins.ros.org/job/devel-indigo-rosparam_shortcuts) Devel Job Status
  * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-rosparam-shortcuts_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-indigo-rosparam-shortcuts_binarydeb_trusty_amd64/) AMD64 Debian Job Status
