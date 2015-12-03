@@ -36,8 +36,8 @@
    Desc:   Helpers for loading parameters from the parameter server
 */
 
-#ifndef ROS_PARAM_UTILITIES__ROS_PARAM_UTILITIES
-#define ROS_PARAM_UTILITIES__ROS_PARAM_UTILITIES
+#ifndef ROSPARAM_SHORTCUTS__ROSPARAM_SHORTCUTS
+#define ROSPARAM_SHORTCUTS__ROSPARAM_SHORTCUTS
 
 // ROS
 #include <ros/ros.h>
@@ -45,7 +45,7 @@
 // Eigen
 #include <Eigen/Geometry>
 
-namespace ros_param_shortcuts
+namespace rosparam_shortcuts
 {
 
 // -------------------------------------------------------------------------------------------------

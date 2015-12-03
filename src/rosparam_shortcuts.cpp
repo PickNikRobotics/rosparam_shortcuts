@@ -36,9 +36,9 @@
    Desc:   Helpers for loading parameters from the parameter server
 */
 
-#include <ros_param_shortcuts/ros_param_shortcuts.h>
+#include <rosparam_shortcuts/rosparam_shortcuts.h>
 
-namespace ros_param_shortcuts
+namespace rosparam_shortcuts
 {
 
 bool getBoolParam(const std::string& parent_name, const ros::NodeHandle &nh, const std::string &param_name,
