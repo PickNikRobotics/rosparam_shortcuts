@@ -2,7 +2,7 @@
 <package>
   <name>rosparam_shortcuts</name>
   <version>0.0.2</version>
-  <description>The rosparam_shortcuts package</description>
+  <description>Quickly load variables from rosparam with good command line error checking.</description>
 
   <maintainer email="davetcoleman@gmail.com">Dave Coleman</maintainer>
 
