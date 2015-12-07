@@ -2,8 +2,8 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.4 (2015-12-07)
+------------------
 * Attempt to fix Eigen include dir
 * Contributors: Dave Coleman
 
