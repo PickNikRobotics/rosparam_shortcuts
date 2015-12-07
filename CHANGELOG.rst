@@ -2,6 +2,11 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Attempt to fix Eigen include dir
+* Contributors: Dave Coleman
+
 0.0.3 (2015-12-05)
 ------------------
 * Added travis support
