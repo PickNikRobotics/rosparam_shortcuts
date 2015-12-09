@@ -2,8 +2,8 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.5 (2015-12-09)
+------------------
 * Attempting to fix Eigen
 * Fix missing dependency
 * Contributors: Dave Coleman
