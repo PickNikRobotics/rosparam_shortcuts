@@ -19,8 +19,10 @@
   <build_depend>roscpp</build_depend>
   <build_depend>cmake_modules</build_depend>
   <build_depend>eigen</build_depend>
+  <build_depend>eigen_conversions</build_depend>
 
   <run_depend>roscpp</run_depend>
+  <run_depend>eigen</run_depend>
 
   <export>
   </export>
