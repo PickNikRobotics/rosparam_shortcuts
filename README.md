@@ -1,4 +1,4 @@
-# rosparam Shortcuts
+# ROS Param Shortcuts
 
 Quickly load variables from rosparam with good command line error checking.
 
@@ -19,20 +19,20 @@ Developed by [Dave Coleman](http://dav.ee/) at the University of Colorado Boulde
 Status:
 
  * [![Build Status](https://travis-ci.org/davetcoleman/rosparam_shortcuts.svg)](https://travis-ci.org/davetcoleman/rosparam_shortcuts) Travis CI
- * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=devel-jade-rosparam_shortcuts)](http://jenkins.ros.org/job/devel-jade-rosparam_shortcuts/) Devel Job Status
- * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-rosparam-shortcuts_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-jade-rosparam-shortcuts_binarydeb_trusty_amd64/) AMD64 Debian Job Status
+ * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=devel-indigo-rosparam_shortcuts)](http://jenkins.ros.org/job/devel-indigo-rosparam_shortcuts/) Devel Job Status
+ * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-indigo-rosparam-shortcuts_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-indigo-rosparam-shortcuts_binarydeb_trusty_amd64/) AMD64 Debian Job Status
 
 ## Install
 
 ### Ubuntu Debian
 
 ```
-sudo apt-get install ros-jade-rosparam-shortcuts
+sudo apt-get install ros-indigo-rosparam-shortcuts
 ```
 
 ## Code API
 
-See [Class Reference](http://docs.ros.org/jade/api/rosparams_shortcuts/html/)
+See [Class Reference](http://docs.ros.org/indigo/api/rosparams_shortcuts/html/)
 
 ## Example Usage / Demo
 
