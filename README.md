@@ -19,12 +19,8 @@ Developed by [Dave Coleman](http://dav.ee/) at the University of Colorado Boulde
 Status:
 
  * [![Build Status](https://travis-ci.org/davetcoleman/rosparam_shortcuts.svg)](https://travis-ci.org/davetcoleman/rosparam_shortcuts) Travis CI
- * [![Devel Job Status](http://jenkins.ros.org/buildStatus/icon?job=devel-jade-rosparam-shortcuts)](http://jenkins.ros.org/job/devel-jade-rosparam_shortcuts) Devel Job Status
+ * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=devel-jade-rosparam_shortcuts)](http://jenkins.ros.org/job/devel-jade-rosparam_shortcuts/) Devel Job Status
  * [![Build Status](http://jenkins.ros.org/buildStatus/icon?job=ros-jade-rosparam-shortcuts_binarydeb_trusty_amd64)](http://jenkins.ros.org/job/ros-jade-rosparam-shortcuts_binarydeb_trusty_amd64/) AMD64 Debian Job Status
-
-[![Build Status](http://jenkins.ros.org/job/devel-jade-rosparam_shortcuts/badge/icon)](http://jenkins.ros.org/job/devel-jade-rosparam_shortcuts/)
-
-[![Build Status](http://jenkins.ros.org/buildStatus/icon?job=devel-jade-rosparam_shortcuts)](http://jenkins.ros.org/job/devel-jade-rosparam_shortcuts/)
 
 ## Install
 
