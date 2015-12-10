@@ -34,40 +34,20 @@ sudo apt-get install ros-jade-rosparam-shortcuts
 
 See [Class Reference](http://docs.ros.org/jade/api/rosparams_shortcuts/html/)
 
-## Example Usage
+## Example Usage / Demo
 
-In your C++ file's header:
+See the file ``src/rosparam_shortcuts_example.cpp`` for example code. To run:
 
-    // ROS parameter loading
-    #include <rosparam_shortcuts/rosparam_shortcuts.h>
+    roslaunch rosparam_shortcuts example.launch
 
-And in your class constructor (or other location):
+Your yaml file would look something like the file ``config/example.yaml``:
 
-    // Load rosparams
-    {
-      const std::string parent_name = "my_controller";  // for namespacing logging messages
-      ros::NodeHandle rosparam_nh(nh_, parent_name);
-      using namespace rosparam_shortcuts;
-      std::size_t error = 0;
-      error += !getDoubleParam(parent_name, rosparam_nh, "control_rate", control_rate_);
-	  error += !getIntParam(parent_name, rosparam_nh, "param1", param1_);
-	  error += !getSizeTParam(parent_name, rosparam_nh, "param2", param2_);
-	  error += !getDurationParam(parent_name, rosparam_nh, "param3", param3_);
-	  error += !getAffine3dParam(parent_name, rosparam_nh, "param4", param4_);
-
-	  // add more parameters to load if desired
-	  shutdownIfParamErrors(parent_name, error);
-    }
-
-Your yaml file would look something like this:
-
-    my_node:
-      my_controller:
-	    control_rate: 100.0
-		param1: 20
-		param2: 30
-		param3: 1
-		param4: [1, 1, 1, 3.14, 0, 0] # x, y, z, roll, pitch, yaw
+    example:
+	  control_rate: 100.0
+	  param1: 20
+	  param2: 30
+	  param3: 1
+	  param4: [1, 1, 1, 3.14, 0, 0] # x, y, z, roll, pitch, yaw
 
 ## Contribute
 

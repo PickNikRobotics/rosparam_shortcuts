@@ -1,0 +1,6 @@
+example:
+  control_rate: 100.0
+  param1: 20
+  param2: 30
+  param3: 1
+  param4: [1, 1, 1, 3.14, 0, 0] # x, y, z, roll, pitch, yaw
