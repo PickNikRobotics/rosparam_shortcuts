@@ -60,7 +60,8 @@ namespace rosparam_shortcuts
  * \param value - resulting loaded values, or no change if error (function returns false)
  * \return true on success
  */
-bool getBoolParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, bool &value);
+bool getBoolParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+                  bool &value);
 
 bool getBoolMap(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &params_namespace,
                 std::map<std::string, bool> &parameters);
@@ -90,6 +91,69 @@ bool getDurationParam(const std::string &parent_name, const ros::NodeHandle &nh,
 
 bool getAffine3dParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                       Eigen::Affine3d &value);
+
+// -------------------------------------------------------------------------
+// Shortcuts
+// -------------------------------------------------------------------------
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, bool &value)
+{
+  return getBoolParam(parent_name, nh, param_name, value);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &params_name,
+         std::map<std::string, bool> &parameters)
+{
+  return getBoolMap(parent_name, nh, params_name, parameters);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, double &value)
+{
+  return getDoubleParam(parent_name, nh, param_name, value);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         std::vector<double> &values)
+{
+  return getDoubleParams(parent_name, nh, param_name, values);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, int &value)
+{
+  return getIntParam(parent_name, nh, param_name, value);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, unsigned int &value)
+{
+  return getIntParam(parent_name, nh, param_name, value);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, std::size_t &value)
+{
+  return getSizeTParam(parent_name, nh, param_name, value);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, std::string &value)
+{
+  return getStringParam(parent_name, nh, param_name, value);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         std::vector<std::string> &values)
+{
+  return getStringParams(parent_name, nh, param_name, values);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, ros::Duration &value)
+{
+  return getDurationParam(parent_name, nh, param_name, value);
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         Eigen::Affine3d &value)
+{
+  return getAffine3dParam(parent_name, nh, param_name, value);
+}
 
 /**
  * \brief Output a string of values from an array for debugging
