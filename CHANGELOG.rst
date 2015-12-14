@@ -2,6 +2,12 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Added shortcut version of functions
+* Fix install
+* Contributors: Dave Coleman
+
 0.0.6 (2015-12-10)
 ------------------
 * Added example code
