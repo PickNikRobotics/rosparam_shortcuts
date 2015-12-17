@@ -2,6 +2,12 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Deprecated long named functions in favor of short named functions
+* Removed redundant unsigned int function
+* Contributors: Dave Coleman
+
 0.0.7 (2015-12-13)
 ------------------
 * Added shortcut version of functions
