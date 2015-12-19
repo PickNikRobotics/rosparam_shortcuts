@@ -2,6 +2,14 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fixed CMake build
+* Ran roslint
+* Ran catkin lint
+* Updated example
+* Contributors: Dave Coleman
+
 0.1.0 (2015-12-17)
 ------------------
 * Deprecated long named functions in favor of short named functions
