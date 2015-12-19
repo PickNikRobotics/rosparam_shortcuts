@@ -36,8 +36,13 @@
    Desc:   Helpers for loading parameters from the parameter server
 */
 
-#ifndef ROSPARAM_SHORTCUTS__ROSPARAM_SHORTCUTS
-#define ROSPARAM_SHORTCUTS__ROSPARAM_SHORTCUTS
+#ifndef ROSPARAM_SHORTCUTS_ROSPARAM_SHORTCUTS_H
+#define ROSPARAM_SHORTCUTS_ROSPARAM_SHORTCUTS_H
+
+// C++
+#include <string>
+#include <vector>
+#include <map>
 
 // ROS
 #include <ros/ros.h>
@@ -82,7 +87,8 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
          std::vector<std::string> &values);
 
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, ros::Duration &value);
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         ros::Duration &value);
 
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
          Eigen::Affine3d &value);
@@ -92,8 +98,7 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
 // -------------------------------------------------------------------------
 
 ROSPARAM_SHORTCUTS_DEPRECATED
-bool getBoolParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-                  bool &value)
+bool getBoolParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, bool &value)
 {
   return get(parent_name, nh, param_name, value);
 }
@@ -188,13 +193,12 @@ bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> v
  */
 void shutdownIfError(const std::string &parent_name, std::size_t error_count);
 
-
 ROSPARAM_SHORTCUTS_DEPRECATED
 void shutdownIfParamErrors(const std::string &parent_name, std::size_t error_count)
 {
   shutdownIfError(parent_name, error_count);
 }
 
-}  // end namespace
+}  // namespace rosparam_shortcuts
 
-#endif
+#endif  // ROSPARAM_SHORTCUTS_ROSPARAM_SHORTCUTS_H

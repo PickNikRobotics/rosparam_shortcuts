@@ -5,6 +5,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   cmake_modules
   eigen_conversions # TODO(davetcoleman) remove this dependency, only for build testing
+  roslint
 )
 
 find_package(Eigen REQUIRED)
@@ -46,6 +47,14 @@ target_link_libraries(${PROJECT_NAME}_example
 )
 
 #############
+## Testing ##
+#############
+
+## Test for correct C++ source code
+## To run: catkin bot --make-args roslint
+roslint_cpp()
+
+#############
 ## Install ##
 #############
 
@@ -63,9 +72,16 @@ install(DIRECTORY include/${PROJECT_NAME}/
   PATTERN ".svn" EXCLUDE
 )
 
-## Mark other files for installation (e.g. launch and bag files, etc.)
-install(FILES
-  launch/*
-  config/*
+# Mark roslaunch files for installation
+install(DIRECTORY launch/
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  FILES_MATCHING PATTERN "*.launch"
+  PATTERN ".svn" EXCLUDE
+)
+
+# Mark config files for installation
+install(DIRECTORY config/
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+  FILES_MATCHING PATTERN "*.yaml"
+  PATTERN ".svn" EXCLUDE
 )

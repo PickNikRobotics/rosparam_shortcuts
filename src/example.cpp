@@ -36,6 +36,9 @@
    Desc:   Example of how to use rosparam_shorcuts
 */
 
+// C++
+#include <string>
+
 // ROS
 #include <ros/ros.h>
 
@@ -62,11 +65,11 @@ int main(int argc, char** argv)
   // Load rosparams
   ros::NodeHandle rpnh(nh, name);
   std::size_t error = 0;
-  error += !rosparam_shortcuts::get(name, rpnh, "control_rate", control_rate); // Double param
-  error += !rosparam_shortcuts::get(name, rpnh, "param1", param1); // Int param
-  error += !rosparam_shortcuts::get(name, rpnh, "param2", param2); // SizeT param
-  error += !rosparam_shortcuts::get(name, rpnh, "param3", param3); // Duration param
-  error += !rosparam_shortcuts::get(name, rpnh, "param4", param4); // Affine3d param
+  error += !rosparam_shortcuts::get(name, rpnh, "control_rate", control_rate);  // Double param
+  error += !rosparam_shortcuts::get(name, rpnh, "param1", param1);              // Int param
+  error += !rosparam_shortcuts::get(name, rpnh, "param2", param2);              // SizeT param
+  error += !rosparam_shortcuts::get(name, rpnh, "param3", param3);              // Duration param
+  error += !rosparam_shortcuts::get(name, rpnh, "param4", param4);              // Affine3d param
   // add more parameters here to load if desired
   rosparam_shortcuts::shutdownIfError(name, error);
 
@@ -76,8 +79,6 @@ int main(int argc, char** argv)
   ROS_INFO_STREAM_NAMED(name, "param2: " << param2);
   ROS_INFO_STREAM_NAMED(name, "param3: " << param3.toSec());
   ROS_INFO_STREAM_NAMED(name, "param4: Translation:\n" << param4.translation());
-
-
 
   ROS_INFO_STREAM_NAMED(name, "Shutting down.");
   ros::shutdown();
