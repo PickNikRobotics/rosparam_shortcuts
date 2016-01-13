@@ -1,6 +1,7 @@
 example:
-  control_rate: 100.0
-  param1: 20
-  param2: 30
-  param3: 1
-  param4: [1, 1, 1, 3.14, 0, 0] # x, y, z, roll, pitch, yaw
+  control_rate: 100.0 # double
+  param1: 20 # int
+  param2: 30 # size_t
+  param3: 1 # ros::Duration
+  param4: [1, 1, 1, 3.14, 0, 0] # Eigen::Affine3d - x, y, z, roll, pitch, yaw
+  param5: [1.1, 2.2, 3.3, 4.4] # std::vector<double>

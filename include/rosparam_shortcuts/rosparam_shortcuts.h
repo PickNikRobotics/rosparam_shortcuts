@@ -130,13 +130,6 @@ bool getIntParam(const std::string &parent_name, const ros::NodeHandle &nh, cons
   return get(parent_name, nh, param_name, value);
 }
 
-// ROSPARAM_SHORTCUTS_DEPRECATED
-// bool getIntParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-//                  unsigned int &value)
-// {
-//   return get(parent_name, nh, param_name, value);
-// }
-
 ROSPARAM_SHORTCUTS_DEPRECATED
 bool getSizeTParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
                    std::size_t &value)

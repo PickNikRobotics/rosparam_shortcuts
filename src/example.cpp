@@ -38,6 +38,7 @@
 
 // C++
 #include <string>
+#include <vector>
 
 // ROS
 #include <ros/ros.h>
@@ -61,6 +62,7 @@ int main(int argc, char** argv)
   std::size_t param2;
   ros::Duration param3;
   Eigen::Affine3d param4;
+  std::vector<double> param5;
 
   // Load rosparams
   ros::NodeHandle rpnh(nh, name);
@@ -70,6 +72,7 @@ int main(int argc, char** argv)
   error += !rosparam_shortcuts::get(name, rpnh, "param2", param2);              // SizeT param
   error += !rosparam_shortcuts::get(name, rpnh, "param3", param3);              // Duration param
   error += !rosparam_shortcuts::get(name, rpnh, "param4", param4);              // Affine3d param
+  error += !rosparam_shortcuts::get(name, rpnh, "param5", param5);              // std::vector<double>
   // add more parameters here to load if desired
   rosparam_shortcuts::shutdownIfError(name, error);
 
@@ -79,7 +82,8 @@ int main(int argc, char** argv)
   ROS_INFO_STREAM_NAMED(name, "param2: " << param2);
   ROS_INFO_STREAM_NAMED(name, "param3: " << param3.toSec());
   ROS_INFO_STREAM_NAMED(name, "param4: Translation:\n" << param4.translation());
-
+  ROS_INFO_STREAM_NAMED(name, "param5[0]: " << param5[0]);
+  ROS_INFO_STREAM_NAMED(name, "param5[3]: " << param5[3]);
   ROS_INFO_STREAM_NAMED(name, "Shutting down.");
   ros::shutdown();
 
