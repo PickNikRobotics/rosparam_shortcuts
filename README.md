@@ -58,6 +58,38 @@ example:
   param5: [1.1, 2.2, 3.3, 4.4] # std::vector<double>
 ```
 
+### Include Note
+
+Possible dependency issues - I'm not sure if this is always in issue or if there is an easy fix, but when
+including this package in another package you might need to add dependencies on Eigen throught that new package.
+This requires:
+
+package.xml:
+
+```
+<build_depend>eigen</build_depend>
+<run_depend>eigen</run_depend>
+```
+
+CMakeLists.txt:
+
+```
+find_package(catkin REQUIRED COMPONENTS
+  cmake_modules
+  ...
+)
+find_package(Eigen REQUIRED)
+catkin_package(
+  DEPENDS
+    Eigen
+)
+include_directories(
+  ${EIGEN_INCLUDE_DIRS}
+)
+```
+
+If you have a fix for this, let me know!
+
 ## Testing and Linting
 
 To run [roslint](http://wiki.ros.org/roslint), use the following command with [catkin-tools](https://catkin-tools.readthedocs.org/):
