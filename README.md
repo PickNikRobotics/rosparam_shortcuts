@@ -30,24 +30,79 @@ Status:
 sudo apt-get install ros-indigo-rosparam-shortcuts
 ```
 
+### Build from Source
+
+To build this package, ``git clone`` this repo into a [catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) and be sure to install necessary dependencies by running the following command in the root of your catkin workspace:
+
+    rosdep install -y --from-paths src --ignore-src --rosdistro indigo
+
 ## Code API
 
 See [Class Reference](http://docs.ros.org/indigo/api/rosparams_shortcuts/html/)
 
-## Example Usage / Demo
+## Usage / Demo
 
-See the file ``src/rosparam_shortcuts_example.cpp`` for example code. To run:
+See the file ``src/example.cpp`` for example code. To run:
 
     roslaunch rosparam_shortcuts example.launch
 
 Your yaml file would look something like the file ``config/example.yaml``:
 
-    example:
-	  control_rate: 100.0
-	  param1: 20
-	  param2: 30
-	  param3: 1
-	  param4: [1, 1, 1, 3.14, 0, 0] # x, y, z, roll, pitch, yaw
+```
+example:
+  control_rate: 100.0 # double
+  param1: 20 # int
+  param2: 30 # size_t
+  param3: 1 # ros::Duration
+  param4: [1, 1, 1, 3.14, 0, 0] # Eigen::Affine3d - x, y, z, roll, pitch, yaw
+  param5: [1.1, 2.2, 3.3, 4.4] # std::vector<double>
+```
+
+### Include Note
+
+Possible dependency issues - I'm not sure if this is always in issue or if there is an easy fix, but when
+including this package in another package you might need to add dependencies on Eigen throught that new package.
+This requires:
+
+package.xml:
+
+```
+<build_depend>eigen</build_depend>
+<run_depend>eigen</run_depend>
+```
+
+CMakeLists.txt:
+
+```
+find_package(catkin REQUIRED COMPONENTS
+  cmake_modules
+  ...
+)
+find_package(Eigen REQUIRED)
+catkin_package(
+  DEPENDS
+    Eigen
+)
+include_directories(
+  ${EIGEN_INCLUDE_DIRS}
+)
+```
+
+If you have a fix for this, let me know!
+
+## Testing and Linting
+
+To run [roslint](http://wiki.ros.org/roslint), use the following command with [catkin-tools](https://catkin-tools.readthedocs.org/):
+
+    catkin build --no-status --no-deps --this --make-args roslint
+
+To run [catkin lint](https://pypi.python.org/pypi/catkin_lint), use the following command with [catkin-tools](https://catkin-tools.readthedocs.org/):
+
+    catkin lint -W2
+
+There are currently no unit or integration tests for this package. If there were you would use the following command with [catkin-tools](https://catkin-tools.readthedocs.org/):
+
+    catkin run_tests --no-deps --this -i
 
 ## Contribute
 
