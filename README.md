@@ -18,9 +18,9 @@ Developed by [Dave Coleman](http://dav.ee/) at the University of Colorado Boulde
 
 Status:
 
- * [![Build Status](https://travis-ci.org/davetcoleman/rosparam_shortcuts.svg)](https://travis-ci.org/davetcoleman/rosparam_shortcuts) Travis CI
- * [![Build Status](http://build.ros.org/buildStatus/icon?job=Jsrc_uT__rosparam_shortcuts__ubuntu_trusty__source)](http://build.ros.org/view/Jsrc_uT/job/Jsrc_uT__rosparam_shortcuts__ubuntu_trusty__source/) Trusty Source Build Status
- * [![Build Status](http://build.ros.org/buildStatus/icon?job=Jbin_uT64__rosparam_shortcuts__ubuntu_trusty_amd64__binary)](http://build.ros.org/view/Jbin_uT64/job/Jbin_uT64__rosparam_shortcuts__ubuntu_trusty_amd64__binary/) AMD64 Trusty Debian Job Status
+ * [![Build Status](https://travis-ci.org/davetcoleman/rosparam_shortcuts.svg)](https://travis-ci.org/davetcoleman/rosparam_shortcuts) Travis - Continuous Integration
+ * [![Build Status](http://build.ros.org/buildStatus/icon?job=Jsrc_uT__rosparam_shortcuts__ubuntu_trusty__source)](http://build.ros.org/view/Jsrc_uT/job/Jsrc_uT__rosparam_shortcuts__ubuntu_trusty__source/) ROS Buildfarm - Trusty Devel Source Build
+ * [![Build Status](http://build.ros.org/buildStatus/icon?job=Jbin_uT64__rosparam_shortcuts__ubuntu_trusty_amd64__binary)](http://build.ros.org/view/Jbin_uT64/job/Jbin_uT64__rosparam_shortcuts__ubuntu_trusty_amd64__binary/) ROS Buildfarm - AMD64 Trusty Debian Build
 
 ## Install
 
