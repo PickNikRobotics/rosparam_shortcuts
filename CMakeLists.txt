@@ -11,7 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roslint
 )
 
-find_package(Eigen REQUIRED)
+find_package(Eigen3 REQUIRED)
 
 catkin_package(
   INCLUDE_DIRS
@@ -25,7 +25,7 @@ catkin_package(
 )
 
 include_directories(SYSTEM
-  ${EIGEN_INCLUDE_DIRS}
+  ${EIGEN3_INCLUDE_DIRS}
 )
 
 include_directories(
