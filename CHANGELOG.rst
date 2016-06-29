@@ -2,8 +2,8 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.0 (2016-06-29)
+------------------
 * Upgrade to Eigen3 per ROS Kinetic requirements
 * Converted to C++11 for ROS Kinetic
 * Removed deprecated functions
