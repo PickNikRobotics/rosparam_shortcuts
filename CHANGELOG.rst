@@ -2,6 +2,16 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Upgrade to Eigen3 per ROS Kinetic requirements
+* Converted to C++11 for ROS Kinetic
+* Removed deprecated functions
+* Improve documentation
+* fix typo
+* Added loading a vector to example
+* Contributors: Dave Coleman, Sammy Pfeiffer
+
 0.1.1 (2015-12-18)
 ------------------
 * Fixed CMake build
