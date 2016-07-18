@@ -93,78 +93,6 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
          Eigen::Affine3d &value);
 
-// -------------------------------------------------------------------------
-// Old methods
-// -------------------------------------------------------------------------
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getBoolParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, bool &value)
-{
-  return get(parent_name, nh, param_name, value);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getBoolMap(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &params_name,
-                std::map<std::string, bool> &parameters)
-{
-  return get(parent_name, nh, params_name, parameters);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getDoubleParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-                    double &value)
-{
-  return get(parent_name, nh, param_name, value);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getDoubleParams(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-                     std::vector<double> &values)
-{
-  return get(parent_name, nh, param_name, values);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getIntParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, int &value)
-{
-  return get(parent_name, nh, param_name, value);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getSizeTParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-                   std::size_t &value)
-{
-  return get(parent_name, nh, param_name, value);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getStringParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-                    std::string &value)
-{
-  return get(parent_name, nh, param_name, value);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getStringParams(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-                     std::vector<std::string> &values)
-{
-  return get(parent_name, nh, param_name, values);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getDurationParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-                      ros::Duration &value)
-{
-  return get(parent_name, nh, param_name, value);
-}
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-bool getAffine3dParam(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-                      Eigen::Affine3d &value)
-{
-  return get(parent_name, nh, param_name, value);
-}
-
 /**
  * \brief Output a string of values from an array for debugging
  * \param array of values
@@ -185,12 +113,6 @@ bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> v
  * \param error - total number of errors found
  */
 void shutdownIfError(const std::string &parent_name, std::size_t error_count);
-
-ROSPARAM_SHORTCUTS_DEPRECATED
-void shutdownIfParamErrors(const std::string &parent_name, std::size_t error_count)
-{
-  shutdownIfError(parent_name, error_count);
-}
 
 }  // namespace rosparam_shortcuts
 
