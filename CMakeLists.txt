@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(rosparam_shortcuts)
 
 # C++ 11
-add_compile_options(-std=c++11) 
+add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
@@ -16,12 +16,13 @@ find_package(Eigen3 REQUIRED)
 catkin_package(
   INCLUDE_DIRS
     include
+    ${EIGEN3_INCLUDE_DIR}
   LIBRARIES
     ${PROJECT_NAME}
   CATKIN_DEPENDS
     roscpp
   DEPENDS
-    Eigen
+    EIGEN3
 )
 
 include_directories(SYSTEM
