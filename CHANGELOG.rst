@@ -2,8 +2,8 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.2.1 (2016-09-28)
+------------------
 * Fix Eigen3 include
 * Fix C++11 compiling method
 * Update Travis for Kinetic
