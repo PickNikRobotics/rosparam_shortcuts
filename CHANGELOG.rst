@@ -2,6 +2,14 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fix Eigen3 include
+* Fix C++11 compiling method
+* Update Travis for Kinetic
+* Updated README
+* Contributors: Dave Coleman
+
 0.2.0 (2016-06-29)
 ------------------
 * Upgrade to Eigen3 per ROS Kinetic requirements
