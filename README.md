@@ -38,7 +38,7 @@ To build this package, ``git clone`` this repo into a [catkin workspace](http://
 
 ## Code API
 
-See [Class Reference](http://docs.ros.org/kinetic/api/rosparams_shortcuts/html/)
+See [Class Reference](http://docs.ros.org/kinetic/api/rosparam_shortcuts/html/)
 
 ## Usage / Demo
 
