@@ -4,10 +4,17 @@ project(rosparam_shortcuts)
 # C++ 11
 add_compile_options(-std=c++11)
 
+find_package(Eigen3 REQUIRED)
+
+if(NOT EIGEN3_INCLUDE_DIRS)
+  set(EIGEN3_INCLUDE_DIRS ${EIGEN3_INCLUDE_DIR})
+endif()
+
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   cmake_modules
   eigen_conversions # TODO(davetcoleman) remove this dependency, only for build testing
+  eigen_stl_containers
   roslint
 )
 
@@ -20,6 +27,7 @@ catkin_package(
   LIBRARIES
     ${PROJECT_NAME}
   CATKIN_DEPENDS
+    eigen_stl_containers
     roscpp
   DEPENDS
     EIGEN3

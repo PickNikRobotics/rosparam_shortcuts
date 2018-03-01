@@ -49,6 +49,7 @@
 
 // Eigen
 #include <Eigen/Geometry>
+#include <eigen_stl_containers/eigen_stl_containers.h>
 
 // this package
 #include <rosparam_shortcuts/deprecation.h>
@@ -93,6 +94,9 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
          Eigen::Affine3d &value);
 
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         EigenSTL::vector_Affine3d& value);
+
 /**
  * \brief Output a string of values from an array for debugging
  * \param array of values
@@ -103,10 +107,17 @@ std::string getDebugArrayString(std::vector<double> values);
 std::string getDebugArrayString(std::vector<std::string> values);
 
 /**
- * \brief Convert from 6 doubles of [x,y,z] [r,p,y] to a transform
+ * \brief Convert from 6 doubles of [x,y,z] [r,p,y] or 7 doubles of [x, y, z, qw, qx, qy, qz] to a transform
  * \return true on success
  */
 bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Affine3d &transform);
+
+/**
+ * \brief Convert from N * 6 doubles of [x,y,z] [r,p,y] or N * 7 doubles of [x, y, z, qw, qx, qy, qz] to a vector of N transforms.
+ * \return true on success
+ */
+
+bool convertDoublesToEigenVector(const std::string &parent_name, std::vector<double> values, EigenSTL::vector_Affine3d& waypoints);
 
 /**
  * \brief Check that there were no errors, and if there were, shutdown

@@ -233,6 +233,45 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
   return true;
 }
 
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         EigenSTL::vector_Affine3d& value)
+{
+  std::vector<double> values;
+
+  // Load a param
+  if (!nh.hasParam(param_name))
+  {
+    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+    return false;
+  }
+  nh.getParam(param_name, values);
+
+  if (values.empty())
+    ROS_WARN_STREAM_NAMED(parent_name, "Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'"
+                                                                                                                   ".");
+
+  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name
+                                                           << "' with values [" << getDebugArrayString(values) << "]");
+
+  if (values.size() % 6 == 0 && values.size() % 7 == 0)
+  {
+    ROS_ERROR_STREAM_NAMED(parent_name, "It is ambiguous if you passed in RPY or a quaternion. get for EigenSTL::vector_Affine3d only supported for N waypoints where N is not divisibly by both 7 and 6.");
+    return false;
+  }
+  if (values.size() % 6 == 0){
+    value.resize(values.size() / 6);
+  }
+  else if (values.size() % 7 == 0)
+  {
+    value.resize(values.size() / 7);
+  }
+  // Convert to Eigen::Affine3d
+  convertDoublesToEigenVector(parent_name, values, value);
+
+  return true;
+}
+
 std::string getDebugArrayString(std::vector<double> values)
 {
   std::stringstream debug_values;
@@ -255,20 +294,63 @@ std::string getDebugArrayString(std::vector<std::string> values)
 
 bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Affine3d &transform)
 {
-  if (values.size() != 6)
+  if (values.size() == 6)
+  {
+
+    // This version is correct RPY
+    Eigen::AngleAxisd roll_angle(values[3], Eigen::Vector3d::UnitX());
+    Eigen::AngleAxisd pitch_angle(values[4], Eigen::Vector3d::UnitY());
+    Eigen::AngleAxisd yaw_angle(values[5], Eigen::Vector3d::UnitZ());
+    Eigen::Quaternion<double> quaternion = roll_angle * pitch_angle * yaw_angle;
+
+    transform = Eigen::Translation3d(values[0], values[1], values[2]) * quaternion;
+
+    return true;
+  }
+  else if (values.size() == 7)
+  {
+    double x = values[0];
+    double y = values[1];
+    double z = values[2];
+    double qw = values[3];
+    double qx = values[4];
+    double qy = values[5];
+    double qz = values[6];
+    transform = Eigen::Translation3d(x, y, z) * Eigen::Quaterniond(qw, qx, qy, qz);
+    return true;
+  }
+  else
   {
     ROS_ERROR_STREAM_NAMED(parent_name, "Invalid number of doubles provided for transform, size=" << values.size());
     return false;
   }
+}
 
-  // This version is correct RPY
-  Eigen::AngleAxisd roll_angle(values[3], Eigen::Vector3d::UnitX());
-  Eigen::AngleAxisd pitch_angle(values[4], Eigen::Vector3d::UnitY());
-  Eigen::AngleAxisd yaw_angle(values[5], Eigen::Vector3d::UnitZ());
-  Eigen::Quaternion<double> quaternion = roll_angle * pitch_angle * yaw_angle;
+bool convertDoublesToEigenVector(const std::string &parent_name, std::vector<double> values, EigenSTL::vector_Affine3d& waypoints)
+{
+  std::size_t set_size;
+  if (values.size() % 6 == 0 )
+    set_size =6;
+  else if (values.size() % 7 == 0 )
+    set_size = 7;
+  else
+  {
+    ROS_ERROR_STREAM_NAMED(parent_name, "convertDoublesToEigenVector called with incorrect size vector");
+    return false;
+  }
 
-  transform = Eigen::Translation3d(values[0], values[1], values[2]) * quaternion;
-
+  for (std::size_t i=0; i<values.size() / set_size; ++i)
+  {
+    std::vector<double> set;
+    for (std::size_t j=0; j<set_size; ++j)
+    {
+      set.push_back(values[i * set_size + j]);
+    }
+    if (!convertDoublesToEigen(parent_name, set, waypoints[i])){
+      waypoints.resize(0);
+      return false;
+    }
+  }
   return true;
 }
 
