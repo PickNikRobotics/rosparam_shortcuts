@@ -64,8 +64,6 @@ int main(int argc, char** argv)
   Eigen::Affine3d param4;
   std::vector<double> param5;
   Eigen::Affine3d param6;
-  EigenSTL::vector_Affine3d param7;
-  EigenSTL::vector_Affine3d param8;
 
   // Load rosparams
   ros::NodeHandle rpnh(nh, name);
@@ -77,8 +75,6 @@ int main(int argc, char** argv)
   error += !rosparam_shortcuts::get(name, rpnh, "param4", param4);              // Affine3d param
   error += !rosparam_shortcuts::get(name, rpnh, "param5", param5);              // std::vector<double>
   error += !rosparam_shortcuts::get(name, rpnh, "param6", param6);              // Affine3d param
-  error += !rosparam_shortcuts::get(name, rpnh, "param7", param7);              // EigenSTL::vector_Affine3d
-  error += !rosparam_shortcuts::get(name, rpnh, "param8", param8);              // EigenSTL::vector_Affine3d
   // add more parameters here to load if desired
   rosparam_shortcuts::shutdownIfError(name, error);
 
@@ -91,8 +87,6 @@ int main(int argc, char** argv)
   ROS_INFO_STREAM_NAMED(name, "param5[0]: " << param5[0]);
   ROS_INFO_STREAM_NAMED(name, "param5[3]: " << param5[3]);
   ROS_INFO_STREAM_NAMED(name, "param6: Translation:\n" << param6.translation());
-  ROS_INFO_STREAM_NAMED(name, "param7: Translation:\n" << param7[1].translation());
-  ROS_INFO_STREAM_NAMED(name, "param8: Translation:\n" << param8[1].translation());
   ROS_INFO_STREAM_NAMED(name, "Shutting down.");
   ros::shutdown();
 
