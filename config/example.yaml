@@ -4,4 +4,5 @@ example:
   param2: 30 # size_t
   param3: 1 # ros::Duration
   param4: [1, 1, 1, 3.14, 0, 0] # Eigen::Affine3d - x, y, z, roll, pitch, yaw
-  param5: [1.1, 2.2, 3.3, 4.4] # std::vector<double>
+  param5: [1.1, 2.2, 3.3, 4.4]  # std::vector<double>
+  param6: [2, 2, 2, 1, 0, 0, 0] # Eigen::Affine3d - x, y, z, qw, qz, qy, qz

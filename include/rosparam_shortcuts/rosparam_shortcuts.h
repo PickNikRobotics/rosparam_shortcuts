@@ -103,7 +103,7 @@ std::string getDebugArrayString(std::vector<double> values);
 std::string getDebugArrayString(std::vector<std::string> values);
 
 /**
- * \brief Convert from 6 doubles of [x,y,z] [r,p,y] to a transform
+ * \brief Convert from 6 doubles of [x,y,z] [r,p,y] or 7 doubles of [x, y, z, qw, qx, qy, qz] to a transform
  * \return true on success
  */
 bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Affine3d &transform);
