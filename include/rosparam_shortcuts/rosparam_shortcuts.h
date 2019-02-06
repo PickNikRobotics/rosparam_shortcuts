@@ -96,11 +96,24 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
 /**
  * \brief Output a string of values from an array for debugging
  * \param array of values
+ * \tparam ValueType Type of the elements in @values
  * \return string of numbers separated by commas
  */
-std::string getDebugArrayString(std::vector<double> values);
+template <typename ValueType>
+std::string getDebugArrayString(std::vector<ValueType> values)
+{
+  std::string debug_values{};
+  for (const auto &value : values) debug_values += std::to_string(value) + ",";
+  return debug_values;
+}
 
-std::string getDebugArrayString(std::vector<std::string> values);
+template <>
+std::string getDebugArrayString(std::vector<std::string> values)
+{
+  std::string debug_values{};
+  for (const auto &value : values) debug_values += value + ",";
+  return debug_values;
+}
 
 /**
  * \brief Convert from 6 doubles of [x,y,z] [r,p,y] or 7 doubles of [x, y, z, qw, qx, qy, qz] to a transform

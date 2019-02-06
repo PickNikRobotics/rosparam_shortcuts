@@ -233,26 +233,6 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
   return true;
 }
 
-std::string getDebugArrayString(std::vector<double> values)
-{
-  std::stringstream debug_values;
-  for (std::size_t i = 0; i < values.size(); ++i)
-  {
-    debug_values << values[i] << ",";
-  }
-  return debug_values.str();
-}
-
-std::string getDebugArrayString(std::vector<std::string> values)
-{
-  std::stringstream debug_values;
-  for (std::size_t i = 0; i < values.size(); ++i)
-  {
-    debug_values << values[i] << ",";
-  }
-  return debug_values.str();
-}
-
 bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Affine3d &transform)
 {
   if (values.size() == 6)
