@@ -78,6 +78,9 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
          std::vector<double> &values);
 
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         std::vector<bool> &values);
+
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, int &value);
 
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, std::size_t &value);
