@@ -10,7 +10,7 @@ Features:
  - Great for having each class have its own parameter namespace
  - Helpful error messages if parameter is missing, explaining where it expects to find it
  - Removes lots of repetitious code
- - Supports datatypes that rosparam does not by default, such as std::size_t, ros::Duration, Eigen::Affine3d
+ - Supports datatypes that rosparam does not by default, such as std::size_t, ros::Duration, Eigen::Isometry3d, Eigen::Affine3d (deprecated)
  - Supports loading std::vectors easily, and debugging that data
  - Supports loading an entire list of bool parameters
 
@@ -54,7 +54,7 @@ example:
   param1: 20 # int
   param2: 30 # size_t
   param3: 1 # ros::Duration
-  param4: [1, 1, 1, 3.14, 0, 0] # Eigen::Affine3d - x, y, z, roll, pitch, yaw
+  param4: [1, 1, 1, 3.14, 0, 0] # Eigen::Isometry3d - x, y, z, roll, pitch, yaw
   param5: [1.1, 2.2, 3.3, 4.4] # std::vector<double>
 ```
 

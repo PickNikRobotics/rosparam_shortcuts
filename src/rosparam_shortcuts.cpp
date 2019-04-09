@@ -208,7 +208,7 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
 }
 
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-         Eigen::Affine3d &value)
+         Eigen::Isometry3d &value)
 {
   std::vector<double> values;
 
@@ -227,7 +227,7 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
   ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name
                                                            << "' with values [" << getDebugArrayString(values) << "]");
 
-  // Convert to Eigen::Affine3d
+  // Convert to Eigen::Isometry3d
   convertDoublesToEigen(parent_name, values, value);
 
   return true;
@@ -253,7 +253,7 @@ std::string getDebugArrayString(std::vector<std::string> values)
   return debug_values.str();
 }
 
-bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Affine3d &transform)
+bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Isometry3d &transform)
 {
   if (values.size() == 6)
   {
