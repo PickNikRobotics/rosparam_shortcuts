@@ -28,15 +28,15 @@ Status:
 
 ### Ubuntu Debian
 
-```
-sudo apt-get install ros-kinetic-rosparam-shortcuts
-```
+`rosparam_shortcuts` is currently only released for ROS Kinetic and Melodic. For other ROS releases, you may need to build `rosparam_shortcuts` from source.
+
+    sudo apt-get install ros-$ROS_DISTRO-rosparam-shortcuts
 
 ### Build from Source
 
 To build this package, ``git clone`` this repo into a [catkin workspace](http://wiki.ros.org/catkin/Tutorials/create_a_workspace) and be sure to install necessary dependencies by running the following command in the root of your catkin workspace:
 
-    rosdep install -y --from-paths src --ignore-src --rosdistro kinetic
+    rosdep install -y --from-paths src --ignore-src --rosdistro $ROS_DISTRO
 
 ## Code API
 
