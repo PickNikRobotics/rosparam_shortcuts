@@ -2,8 +2,8 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.0 (2019-04-10)
+------------------
 * Deprecate Affine3d transforms and support Isometry3d (`#7 <https://github.com/picknikrobotics/rosparam_shortcuts/issues/7>`_)
 * Merge pull request `#4 <https://github.com/picknikrobotics/rosparam_shortcuts/issues/4>`_ from PickNikRobotics/kinetic-devel-eigen-additions
   adding support for loading trajectories and loading quaternions
