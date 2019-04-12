@@ -114,62 +114,6 @@ bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> v
  */
 void shutdownIfError(const std::string &parent_name, std::size_t error_count);
 
-// Deprecated support for Affine3d transforms in functions get() and convertDoublesToEigen()
-[[deprecated("Affine3d transforms are deprecated since melodic, use Isometry3d instead.")]]
-bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Affine3d &transform)
-{
-  if (values.size() == 6)
-  {
-    // This version is correct RPY
-    Eigen::AngleAxisd roll_angle(values[3], Eigen::Vector3d::UnitX());
-    Eigen::AngleAxisd pitch_angle(values[4], Eigen::Vector3d::UnitY());
-    Eigen::AngleAxisd yaw_angle(values[5], Eigen::Vector3d::UnitZ());
-    Eigen::Quaternion<double> quaternion = roll_angle * pitch_angle * yaw_angle;
-
-    transform = Eigen::Translation3d(values[0], values[1], values[2]) * quaternion;
-
-    return true;
-  }
-  else if (values.size() == 7)
-  {
-    // Quaternion
-    transform = Eigen::Translation3d(values[0], values[1], values[2]) *
-                Eigen::Quaterniond(values[3], values[4], values[5], values[6]);
-    return true;
-  }
-  else
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Invalid number of doubles provided for transform, size=" << values.size());
-    return false;
-  }
-}
-[[deprecated("Affine3d transforms are deprecated since melodic, use Isometry3d instead.")]]
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-         Eigen::Affine3d &value)
-{
-  std::vector<double> values;
-
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, values);
-
-  if (values.empty())
-    ROS_WARN_STREAM_NAMED(parent_name, "Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'"
-                                                                                                                   ".");
-
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name
-                                                           << "' with values [" << getDebugArrayString(values) << "]");
-
-  // Convert to Eigen::Affine3d
-  #pragma GCC diagnostic ignored "-Wdeprecated-declarations"  // suppress warning for deprecated function call
-  convertDoublesToEigen(parent_name, values, value);
-
-  return true;
-}
 }  // namespace rosparam_shortcuts
 
 #endif  // ROSPARAM_SHORTCUTS_ROSPARAM_SHORTCUTS_H
