@@ -2,6 +2,15 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* removing deprecated functions because catkin can't tell the difference between affine3d and isometry3d (`#9 <https://github.com/picknikrobotics/rosparam_shortcuts/issues/9>`_)
+* Travis badge fixup (`#8 <https://github.com/picknikrobotics/rosparam_shortcuts/issues/8>`_)
+  * fixing travis and build tags
+  * updating install instructions
+  * adding melodic ci
+* Contributors: Mike Lautman
+
 0.3.0 (2019-04-10)
 ------------------
 * Deprecate Affine3d transforms and support Isometry3d (`#7 <https://github.com/picknikrobotics/rosparam_shortcuts/issues/7>`_)
