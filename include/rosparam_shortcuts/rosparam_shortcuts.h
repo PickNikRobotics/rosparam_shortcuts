@@ -53,6 +53,9 @@
 // this package
 #include <rosparam_shortcuts/deprecation.h>
 
+// geometry_msgs/Pose
+#include <geometry_msgs/Pose.h>
+
 namespace rosparam_shortcuts
 {
 // -------------------------------------------------------------------------------------------------
@@ -92,6 +95,9 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
 
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
          Eigen::Isometry3d &value);
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         geometry_msgs::Pose &value);
 
 /**
  * \brief Output a string of values from an array for debugging

@@ -58,6 +58,9 @@ example:
   param3: 1 # ros::Duration
   param4: [1, 1, 1, 3.14, 0, 0] # Eigen::Isometry3d - x, y, z, roll, pitch, yaw
   param5: [1.1, 2.2, 3.3, 4.4] # std::vector<double>
+  param6: [2, 2, 2, 1, 0, 0, 0] # Eigen::Isometry3d - x, y, z, qw, qx, qy, qz
+  param7: [1, 1, 1, 3.14, 0, 0] # geometry_msgs::Pose - x, y, z, roll, pitch, yaw
+  param8: [2, 2, 2, 1, 0, 0, 0] # geometry_msgs::Pose - x, y, z, qw, qx, qy, qz
 ```
 
 ## Testing and Linting

@@ -44,6 +44,9 @@
 // this package
 #include <rosparam_shortcuts/rosparam_shortcuts.h>
 
+// Eigen/TF conversion
+#include <eigen_conversions/eigen_msg.h>
+
 namespace rosparam_shortcuts
 {
 bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, bool &value)
@@ -230,6 +233,17 @@ bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::s
   // Convert to Eigen::Isometry3d
   convertDoublesToEigen(parent_name, values, value);
 
+  return true;
+}
+
+bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+         geometry_msgs::Pose &value)
+{
+  Eigen::Isometry3d eigen_pose;
+  if (!get(parent_name, nh, param_name, eigen_pose))
+    return false;
+
+  tf::poseEigenToMsg(eigen_pose, value);
   return true;
 }
 
