@@ -2,8 +2,8 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.2 (2019-09-18)
+------------------
 * Update to new ros_buildfarm workspace directory
 * Add get() for geometry_msgs::Pose
 * Contributors: Henning Kayser
