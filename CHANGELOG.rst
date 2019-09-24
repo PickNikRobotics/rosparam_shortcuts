@@ -2,6 +2,14 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Switch run_depend to eigen_conversions. (`#12 <https://github.com/PickNikRobotics/rosparam_shortcuts/issues/12>`_)
+  Eigen is header-only (so no run_depend needed), but eigen_conversions
+  has a library that needs to be pulled in at runtime.
+  Signed-off-by: Chris Lalancette <clalancette@openrobotics.org>
+* Contributors: Chris Lalancette
+
 0.3.2 (2019-09-18)
 ------------------
 * Update to new ros_buildfarm workspace directory
