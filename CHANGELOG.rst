@@ -2,6 +2,13 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* bump cmake version (`#13 <https://github.com/PickNikRobotics/rosparam_shortcuts/issues/13>`_)
+  get rid of CMP0048 warning.
+  https://github.com/ros-planning/geometric_shapes/pull/129
+* Contributors: Michael Görner
+
 0.3.3 (2019-09-24)
 ------------------
 * Switch run_depend to eigen_conversions. (`#12 <https://github.com/PickNikRobotics/rosparam_shortcuts/issues/12>`_)
