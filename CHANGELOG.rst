@@ -2,8 +2,8 @@
 Changelog for package rosparam_shortcuts
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.0 (2020-06-02)
+------------------
 * bump cmake version (`#13 <https://github.com/PickNikRobotics/rosparam_shortcuts/issues/13>`_)
   get rid of CMP0048 warning.
   https://github.com/ros-planning/geometric_shapes/pull/129

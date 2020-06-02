@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>rosparam_shortcuts</name>
-  <version>0.3.3</version>
+  <version>0.4.0</version>
   <description>Quickly load variables from rosparam with good command line error checking.</description>
 
   <maintainer email="davetcoleman@gmail.com">Dave Coleman</maintainer>
