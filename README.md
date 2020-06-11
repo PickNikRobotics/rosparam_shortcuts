@@ -14,9 +14,11 @@ Features:
  - Supports loading std::vectors easily, and debugging that data
  - Supports loading an entire list of bool parameters
 
-Developed by [Dave Coleman](http://dav.ee/) at the University of Colorado Boulder
+<img src="https://picknik.ai/assets/images/logo.jpg" width="120">
 
-Status:
+This open source project was developed at [PickNik Robotics](https://picknik.ai/). Need professional ROS development and consulting? Contact us at projects@picknik.ai for a free consultation.
+
+## Status:
 
  * [![Build Status](https://api.travis-ci.org/PickNikRobotics/rosparam_shortcuts.svg?branch=melodic-devel)](https://travis-ci.org/PickNikRobotics/rosparam_shortcuts) Travis - Continuous Integration (Melodic)
  * [![Build Status](https://api.travis-ci.org/PickNikRobotics/rosparam_shortcuts.svg?branch=kinetic-devel)](https://travis-ci.org/PickNikRobotics/rosparam_shortcuts) Travis - Continuous Integration (Kinetic)
