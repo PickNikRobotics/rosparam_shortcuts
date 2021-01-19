@@ -1,33 +1,40 @@
-# while this doesn't require sudo we don't want to run within a Docker container
-sudo: true
-dist: trusty
-language: python
-python:
-  - "3.4"
+# This config file for Travis CI utilizes https://github.com/ros-planning/moveit_ci/ package.
+os: linux
+dist: bionic  # distro used by Travis, moveit_ci uses the docker image's distro
+sudo: required
+services:
+  - docker
+language: cpp
+cache: ccache
+compiler: gcc
+
 env:
   global:
-    - JOB_PATH=/tmp/devel_job
-  matrix:
-    - ROS_DISTRO_NAME=kinetic OS_NAME=ubuntu OS_CODE_NAME=xenial ARCH=amd64
-    - ROS_DISTRO_NAME=melodic OS_NAME=ubuntu OS_CODE_NAME=bionic ARCH=amd64
-install:
-  # either install the latest released version of ros_buildfarm
-  - pip install ros_buildfarm
-  # checkout catkin for catkin_test_results script
-  - git clone https://github.com/ros/catkin /tmp/catkin
-  # run devel job for a ROS repository with the same name as this repo
-  - export REPOSITORY_NAME=`basename $TRAVIS_BUILD_DIR`
-  # use the code already checked out by Travis
-  - mkdir -p $JOB_PATH/ws/src
-  - cp -R $TRAVIS_BUILD_DIR $JOB_PATH/ws/src/
-  # generate the script to run a devel job for that target and repo
-  - generate_devel_script.py https://raw.githubusercontent.com/ros-infrastructure/ros_buildfarm_config/production/index.yaml $ROS_DISTRO_NAME default $REPOSITORY_NAME $OS_NAME $OS_CODE_NAME $ARCH > $JOB_PATH/devel_job.sh
-  - cd $JOB_PATH
-  - cat devel_job.sh
-  # run the actual job which involves Docker
-  - sh devel_job.sh -y
+    - MOVEIT_CI_TRAVIS_TIMEOUT=85  # Travis grants us 90 min, but we add a safety margin of 5 min
+    - ROS_DISTRO=foxy
+    - ROS_REPO=ros
+    - CXXFLAGS="-Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls"
+    - WARNINGS_OK=false
+
+jobs:
+  fast_finish: true
+  include:
+    - name: "[Foxy] - clang-format, ament_lint"
+      env: TEST="clang-format ament_lint"
+    - name: "[Foxy] - code-coverage"
+      env: TEST=code-coverage
+    - name: "[Foxy] - gcc (build,test)"
+      env: ROS_DISTRO=foxy
+    - name: "[Foxy] - clang (build,test,clang-tidy-fix)"
+      compiler: clang
+      # test_ikfast_plugins takes ~10 minutes: include here to keep the main jobs shorter
+      env: TEST=clang-tidy-fix
+           CXXFLAGS="-Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls -Wno-overloaded-virtual"
+  allow_failures:
+    - env: TEST=code-coverage
+
+before_script:
+  - git clone -q -b ros2 --depth=1 https://github.com/ros-planning/moveit_ci.git .moveit_ci
+
 script:
-  # get summary of test results
-  - /tmp/catkin/bin/catkin_test_results $JOB_PATH/ws/test_results --all
-notifications:
-  email: davetcoleman@gmail.com
+  - .moveit_ci/travis.sh
