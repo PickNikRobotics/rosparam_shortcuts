@@ -41,60 +41,61 @@
 #include <vector>
 
 // ROS
-#include <ros/ros.h>
+#include <rclcpp/rclcpp.hpp>
 
 // ROS parameter loading
 #include <rosparam_shortcuts/rosparam_shortcuts.h>
 
-int main(int argc, char** argv)
-{
-  std::string name = "example";
-  ros::init(argc, argv, name);
-  ros::NodeHandle nh;
-  ROS_INFO_STREAM_NAMED(name, "Starting rosparam shortcuts example...");
+std::ostream& operator<<(std::ostream& out, const geometry_msgs::msg::Pose& pose) {
+	out << "position: x=" << pose.position.x << ", y=" << pose.position.y << ", z= " << pose.position.z
+	    << " - orientation: x= " << pose.orientation.x << ", y= " << pose.orientation.y << ", z= " << pose.orientation.z
+	    << ", w= " << pose.orientation.w;
+	return out;
+}
+int main(int argc, char** argv) {
+	std::string name = "example";
+	rclcpp::init(argc, argv);
+	auto node = rclcpp::Node::make_shared("example");
+	RCLCPP_INFO(node->get_logger(), "Starting rosparam shortcuts example...");
 
-  // Allow the action server to recieve and send ros messages
-  ros::AsyncSpinner spinner(2);
-  spinner.start();
+	// Allow the action server to recieve and send ros messages
+	double control_rate;
+	int param1;
+	std::size_t param2;
+	rclcpp::Duration param3(0.0);
+	Eigen::Isometry3d param4;
+	std::vector<double> param5;
+	Eigen::Isometry3d param6;
+	geometry_msgs::msg::Pose param7;
+	geometry_msgs::msg::Pose param8;
 
-  double control_rate;
-  int param1;
-  std::size_t param2;
-  ros::Duration param3;
-  Eigen::Isometry3d param4;
-  std::vector<double> param5;
-  Eigen::Isometry3d param6;
-  geometry_msgs::Pose param7;
-  geometry_msgs::Pose param8;
+	// Load rosparams
+	std::size_t error = 0;
+	error += !rosparam_shortcuts::get(node, "control_rate", control_rate);  // Double param
+	error += !rosparam_shortcuts::get(node, "param1", param1);  // Int param
+	error += !rosparam_shortcuts::get(node, "param2", param2);  // SizeT pa ram
+	error += !rosparam_shortcuts::get(node, "param3", param3);  // Duration param
+	error += !rosparam_shortcuts::get(node, "param4", param4);  // Isometry3d param
+	error += !rosparam_shortcuts::get(node, "param5", param5);  // std::vector<double>
+	error += !rosparam_shortcuts::get(node, "param6", param6);  // Isometry3d param
+	error += !rosparam_shortcuts::get(node, "param7", param7);  // geometry_msgs::Pose param
+	error += !rosparam_shortcuts::get(node, "param8", param8);  // geometry_msgs::Pose param
+	// add more parameters here to load if desired
+	rosparam_shortcuts::shutdownIfError(error);
 
-  // Load rosparams
-  ros::NodeHandle rpnh(nh, name);
-  std::size_t error = 0;
-  error += !rosparam_shortcuts::get(name, rpnh, "control_rate", control_rate);  // Double param
-  error += !rosparam_shortcuts::get(name, rpnh, "param1", param1);              // Int param
-  error += !rosparam_shortcuts::get(name, rpnh, "param2", param2);              // SizeT param
-  error += !rosparam_shortcuts::get(name, rpnh, "param3", param3);              // Duration param
-  error += !rosparam_shortcuts::get(name, rpnh, "param4", param4);              // Isometry3d param
-  error += !rosparam_shortcuts::get(name, rpnh, "param5", param5);              // std::vector<double>
-  error += !rosparam_shortcuts::get(name, rpnh, "param6", param6);              // Isometry3d param
-  error += !rosparam_shortcuts::get(name, rpnh, "param7", param7);              // geometry_msgs::Pose param
-  error += !rosparam_shortcuts::get(name, rpnh, "param8", param8);              // geometry_msgs::Pose param
-  // add more parameters here to load if desired
-  rosparam_shortcuts::shutdownIfError(name, error);
+	// Output values that were read in
+	RCLCPP_INFO_STREAM(node->get_logger(), "control rate: " << control_rate);
+	RCLCPP_INFO_STREAM(node->get_logger(), "param1: " << param1);
+	RCLCPP_INFO_STREAM(node->get_logger(), "param2: " << param2);
+	RCLCPP_INFO_STREAM(node->get_logger(), "param3: " << param3.to_chrono<std::chrono::duration<double>>().count());
+	RCLCPP_INFO_STREAM(node->get_logger(), "param4: Translation:\n" << param4.translation());
+	RCLCPP_INFO_STREAM(node->get_logger(), "param5[0]: " << param5[0]);
+	RCLCPP_INFO_STREAM(node->get_logger(), "param5[3]: " << param5[3]);
+	RCLCPP_INFO_STREAM(node->get_logger(), "param6: Translation:\n" << param6.translation());
+	RCLCPP_INFO_STREAM(node->get_logger(), "param7: Pose:\n" << param7);
+	RCLCPP_INFO_STREAM(node->get_logger(), "param8: Pose:\n" << param8);
+	RCLCPP_INFO_STREAM(node->get_logger(), "Shutting down.");
+	rclcpp::shutdown();
 
-  // Output values that were read in
-  ROS_INFO_STREAM_NAMED(name, "control rate: " << control_rate);
-  ROS_INFO_STREAM_NAMED(name, "param1: " << param1);
-  ROS_INFO_STREAM_NAMED(name, "param2: " << param2);
-  ROS_INFO_STREAM_NAMED(name, "param3: " << param3.toSec());
-  ROS_INFO_STREAM_NAMED(name, "param4: Translation:\n" << param4.translation());
-  ROS_INFO_STREAM_NAMED(name, "param5[0]: " << param5[0]);
-  ROS_INFO_STREAM_NAMED(name, "param5[3]: " << param5[3]);
-  ROS_INFO_STREAM_NAMED(name, "param6: Translation:\n" << param6.translation());
-  ROS_INFO_STREAM_NAMED(name, "param7: Pose:\n" << param7);
-  ROS_INFO_STREAM_NAMED(name, "param8: Pose:\n" << param8);
-  ROS_INFO_STREAM_NAMED(name, "Shutting down.");
-  ros::shutdown();
-
-  return 0;
+	return 0;
 }
