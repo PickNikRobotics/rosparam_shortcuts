@@ -1,0 +1,10 @@
+__pycache__
+cmake_install.cmake
+build/
+bin/
+lib/
+*.o
+*.so
+*.a
+!*.c
+!Makefile
