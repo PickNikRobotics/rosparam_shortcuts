@@ -40,7 +40,11 @@
 #define ROSPARAM_SHORTCUTS_ROSPARAM_SHORTCUTS_H
 
 // C++
+#include <functional>
+#include <map>
+#include <mutex>
 #include <string>
+#include <utility>
 #include <vector>
 
 // ROS
@@ -51,6 +55,8 @@
 
 // geometry_msgs/Pose
 #include <geometry_msgs/msg/pose.hpp>
+
+#include <rosparam_shortcuts/node_parameters.h>
 
 namespace rosparam_shortcuts {
 // -------------------------------------------------------------------------------------------------
