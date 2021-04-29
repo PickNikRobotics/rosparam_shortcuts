@@ -27,7 +27,7 @@ public:
 	bool isNodeParameter() const noexcept;  // true if this parameter contains an rclcpp::Parameter
 
 	// Properties
-	void describe(const std::string& description, const std::string& additional_constraints = "");
+	Parameter<ParameterT>& describe(const std::string& description, const std::string& additional_constraints = "");
 	// Allow setting additional properties. i.e. read_only, dynamic_typing?
 	// void setProperties(...);
 
@@ -53,15 +53,15 @@ public:
 	// Callbacks are stored in ordered hash map, could also possibly return hash for deleting later on.
 	// Alternatively, return Parameter<ParameterT>& for method chaining
 	using ParameterValidityCallback = std::function<bool(const ParameterT& value, std::string& message)>;
-	void warnIf(ParameterValidityCallback callback);
-	void errorIf(ParameterValidityCallback callback);  // or rejectIf()/failIf()..
-	// Predefined generic (type-specific?) properties, i.e. 'NO_OVERRIDE', 'EMPTY', 'NORMALIZED'
-	enum ParameterProperty
+	Parameter<ParameterT>& warnIf(ParameterValidityCallback warn_if_callback);
+	Parameter<ParameterT>& errorIf(ParameterValidityCallback error_if_callback);  // or rejectIf()/failIf()..
+	// Predefined generic (type-specific?) conditions, i.e. 'NO_OVERRIDE', 'EMPTY', 'NOT_NORMALIZED'
+	enum ParameterCondition
 	{
 		...
 	};
-	void warnIf(ParameterProperty property);
-	void errorIf(ParameterProperty property);
+	Parameter<ParameterT>& warnIf(ParameterCondition condition);
+	Parameter<ParameterT>& errorIf(ParameterCondition condition);
 
 	// Callback for reacting to simple parameter changes (read-locked)
 	// NOTE: this should be called after validity callbacks so that the parameter status can be evaluated
@@ -76,14 +76,14 @@ protected:
 
 	// Constructor used for child parameters in the tree that share the same data, so basically all parameters
 	// that are neither root nor leaf.
-	// NOTE: not sure if this is really a good solution or if we should simply copy the date and synchronize
+	// NOTE: not sure if this is really a good solution or if we should simply copy the data and synchronize
 	// using child/parent callbacks only
 	Parameter(const std::string& name, ParameterT& value, std::shared_mutex parent_mutex);
 
 private:
 	// Initialize child parameter and call declare() function recursively
 	template <ChildParameterT>
-	void declareChildParam(const std::string, std::map<std::string, std::shared_ptr<NodeParameter>>);
+	void declareChildParam(const std::string, std::map<std::string, std::shared_ptr<NodeParameter>>& node_parameters);
 
 	// Internal value protected by mutex_. Alternatively use a struct ParameterValue that manages
 	// locked acces and use that for internal data (this would allow sharing references between child
@@ -121,26 +121,28 @@ class NodeConfig
 public:
 	NodeConfig(const rclcpp::Node::SharedPtr& node, const std::string base_name = "");
 
+protected:
+
 	/*
 	 * Declare Parameter types, internally calls Parameter<ParameterT>::declare() to get
 	 * all actual node parameters which are then declared using the node parameter interface.
 	 */
 	template <typename ParameterT>
-	void declare(const std::shared_ptr<Parameter<ParameterT>>& parameter);
-	template <typename ParameterT>
-	std::shared_ptr<Parameter<ParameterT>> declare(const std::string& name, ...);
+	Parameter<ParameterT>& declare(Parameter<ParameterT>& parameter);
 
 	/*
 	 * Undeclare a parameter, remove all callbacks that have been registered using the declare() call
 	 */
 	template <typename ParameterT>
-	bool undeclare(const std::shared_ptr<Parameter<ParameterT>>& parameter);
+	bool undeclare(const Parameter<ParameterT>& parameter);
 	bool undeclare(const std::string& name);
 
 	/*
 	 * Return the parameter for a given name, if not found parameter is nullptr
 	 */
-	std::shared_ptr<Parameter<ParameterT>> get(const std::string& name);
+  // Not possible when working with references, maybe only for actual node parameters?
+	// std::shared_ptr<Parameter<ParameterT>> get(const std::string& name);
+	// std::shared_ptr<const Parameter<ParameterT>> get(const std::string& name) const noexcept;
 
 	//
 	// TODO: insert utility functions:  validate(), print, ostream<<, errors(), warnings()...
@@ -150,7 +152,12 @@ private:
 	const rclcpp::Node::SharedPtr node_;
 	const std::string base_name_;
 
-	std::map<std::string, std::shared_ptr<Parameter>> parameters_;
+  // Class similar to the one in rosparam_shortcuts/node_parameters.h
+  // implements ROS calls/checks/callbacks for node_parameters_
+  NodeParametersInterface node_parameters_interface_;
+
+  // Store parameters, only node parameters (rclcpp::Parameters) are stored inside NodeConfig
+	std::map<std::string, Parameter&> parameters_;
 	std::map<std::string, std::shared_ptr<NodeParameter>> node_parameters_;
 
 	// Needed? keep track of registered callbacks that are required for linking SetParameters requests or
@@ -159,4 +166,77 @@ private:
 	// std::string<std::string, std::string> registered_parameter_callbacks_ids_;
 }
 
+struct ExampleConfig : public NodeConfig
+{
+  ExampleConfig(const rclcpp::Node::SharedPtr& node)
+    : NodeConfig(node)
+  {
+    declare(double_param)
+      .describe("This is a very important double parameter", "should be greater than 0 and not 7")
+      .warnIf([](const double& val, std::string& message){
+        message = "Value is 7, are you sure this is a good value?";
+        return val == 7;
+        });
+      .errorIf(
+        [](const double& val, std::string& message){
+        message = "Value must not be negative!";
+        return val < 0;
+        });
+
+      declare(string_param)
+        .describe("meh")
+        .warnIf([](const std::string& val, std::string& message){
+            message = "string is much too long";
+            return val.size() > 100;
+        })
+        .errorIf(EMPTY);
+
+      declare(double_map_param)
+        .describe("6-dof joint state")
+        .errorIf([](const auto& values, std::string& message)
+         {
+           message = "Invalid joint state map values, expected 6-dof";
+           return values.size() != 6 || checkJointNamesInRobotModel(values);  // from somewhere
+         });
+
+
+      // can already check for errors/warnings here
+  }
+
+  Parameter<double> double_param {"double_param"};
+  Parameter<std::vector<std::string>> string_param {"string_param"};
+  Parameter<std::map<std::string, double>> double_map_param {"double_map_param"};
+}
+
+void useConfig(const rclcpp::Node::SharedPtr& node)
+{
+  // use non-const config for initializing callbacks
+  // For safety, it should only be accessed as const in nodes
+  const ExampleConfig config(node);
+
+  // access copy of value
+  double value = config.double_param();
+
+  // ...
+  
+  // React to parameter changes (sub is a bad example, but planning pipeline, plugin etc would work well)
+  auto sub = rclcpp::create_subscription(config.string_param, ...);  // sub managed somewhere else
+  config.string_param->onChanged([&](const std::string& value){
+      sub = rclcpp::create_subscription(config.value, ...);
+      });
+
+
+  // ...
+
+  auto robot_state = /* get robot state copy from somewhere else */;
+  auto update_robot_state = [this, robot_state](const std::map<std::string, double> values){
+    for (const auto& [name, val] : values)
+      robot_state->setVariablePosition(name, val);
+
+    // other thread-safe member function somewhere
+    this->updateRobotState(robot_state);
+    };
+  config.double_map_param.apply(update_robot_state);
+  config.double_map_param.onChanged(update_robot_state);
+}
 }  // namespace rosparam_shortcuts
