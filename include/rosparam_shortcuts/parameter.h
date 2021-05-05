@@ -32,6 +32,7 @@ public:
 	// void setProperties(...);
 
 	// Validity Status
+	const bool isInitialized() const noexcept;  // true when created with default
 	const bool isValid() const noexcept;  // errors empty?
 	const bool hasErrors() const noexcept;
 	const bool hasWarnings() const noexcept;
@@ -45,8 +46,10 @@ public:
 	void applyRW(std::function<void(ParameterT& value)>);
 	void applyRO(std::function<void(const ParameterT& value)>);
 
-	// Copy-set/Copy-get value using read/write lock internally
+	// Copy-set value using read/write lock internally
 	ParameterT& operator=(const ParameterT& value);
+
+	// Copy-get value, throws exception if isInitialized is false, uses read/write lock interally
 	ParameterT operator() const;  // or:  'operator ParameterT() const;'
 
 	// Validity Callbacks (could also use rcl_interfaces::msg::SetParametersResult like in node_parameters.h).
@@ -125,6 +128,8 @@ protected:
 	/*
 	 * Declare Parameter types, internally calls Parameter<ParameterT>::declare() to get
 	 * all actual node parameters which are then declared using the node parameter interface.
+	 *
+	 * This eventually calls the ros interfaces for declaring and getting the parameter.
 	 */
 	template <typename ParameterT>
 	Parameter<ParameterT>& declare(Parameter<ParameterT>& parameter);
@@ -168,49 +173,56 @@ private:
 struct ExampleConfig : public NodeConfig
 {
 	ExampleConfig(const rclcpp::Node::SharedPtr& node) : NodeConfig(node) {
+		// Build and declare the parameters
+
 		// declare simple parameters just like that
-		declare(int1_param);
-		declare(int2_param);
-		declare(int3_param);
+		declare(int1_param.describe("This is the first int parameter"));
+		declare(int2_param.describe("This is the second int parameter"));
+		declare(int3_param.describe("This is the third int parameter"));
 
 		// "double_param", add some description and validity checks
-		declare(double_param)
-		    .describe("This is a very important double parameter", "should be greater than 0 and not 7")
-		    .warnIf([](const double& val, std::string& message) {
-			    message = "Value is 7, are you sure this is a good value?";
-			    return val == 7;
-		    })
-		    .errorIf([](const double& val, std::string& message) {
-			    message = "Value must not be negative!";
-			    return val < 0;
-		    });
+		declare(double_param
+			.describe("This is a very important double parameter", "should be greater than 0 and not 7")
+			.warnIf([](const double& val, std::string& message) {
+				message = "Value is 7, are you sure this is a good value?";
+				return val == 7;
+			})
+			.errorIf([](const double& val, std::string& message) {
+				message = "Value must not be negative!";
+				return val < 0;
+			})
+		);
 
 		// "string_param", use a parameter error condition "EMPTY"
-		declare(string_param)
-		    .describe("meh")
-		    .warnIf([](const std::string& val, std::string& message) {
-			    message = "string is much too long";
-			    return val.size() > 100;
-		    })
-		    .errorIf(EMPTY);
+		declare(string_param
+			.describe("meh")
+			.warnIf([](const std::string& val, std::string& message) {
+				message = "string is much too long";
+				return val.size() > 100;
+			})
+			.errorIf(EMPTY)
+		);
 
 		// "double_map_param", validate keys and values, reject if not valid
-		declare(double_map_param).describe("6-dof joint state").errorIf([](const auto& values, std::string& message) {
-			message = "Invalid joint state map values, expected 6-dof";
-			return values.size() != 6 || checkJointNamesInRobotModel(values);  // from somewhere
-		});
+		declare(double_map_param
+			.describe("6-dof joint state")
+			.errorIf([](const auto& values, std::string& message) {
+				message = "Invalid joint state map values, expected 6-dof";
+				return values.size() != 6 || checkJointNamesInRobotModel(values);  // from somewhere
+			})
+		);
 
 		//
 		// can already check for errors/warnings here...
 		//
 	}
 
-	Parameter<double> double_param{ "double_param" };
-	Parameter<std::vector<std::string>> string_param{ "string_param" };
-	Parameter<std::map<std::string, double>> double_map_param{ "double_map_param" };
-	Parameter<int> int1_param{ "int1_param" };
-	Parameter<int> int2_param{ "int2_param" };
-	Parameter<int> int3_param{ "int3_param" };
+	Parameter<double> double_param{ "double_param", 0 };
+	Parameter<std::vector<std::string>> string_param{ "string_param", {"first", "second"} };
+	Parameter<std::map<std::string, double>> double_map_param{ "double_map_param"};
+	Parameter<int> int1_param{ "int1_param", 0 };
+	Parameter<int> int2_param{ "int2_param", 1 };
+	Parameter<int> int3_param{ "int3_param", 2 };
 }
 
 void useConfig(const rclcpp::Node::SharedPtr& node)
@@ -227,7 +239,7 @@ void useConfig(const rclcpp::Node::SharedPtr& node)
 	// React to parameter changes (sub is a bad example, but planning pipeline, plugin etc would work well)
 	auto sub = rclcpp::create_subscription(config.string_param, ...);  // sub managed somewhere else
 	config.string_param->onChanged(
-	    [&](const std::string& value) { sub = rclcpp::create_subscription(config.value, ...); });
+			[&](const std::string& value) { sub = rclcpp::create_subscription(config.value, ...); });
 
 	// ...
 
