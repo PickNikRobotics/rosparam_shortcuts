@@ -49,261 +49,304 @@
 
 namespace rosparam_shortcuts
 {
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, bool &value)
-{
-  // Load a param
-  if (!nh.hasParam(param_name))
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, bool &value)
   {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, value);
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
-                                                           << value);
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &params_namespace,
-         std::map<std::string, bool> &parameters)
-{
-  // Load a param
-  if (!nh.hasParam(params_namespace))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameters in namespace '" << nh.getNamespace() << "/"
-                                                                            << params_namespace << "'.");
-    return false;
-  }
-  nh.getParam(params_namespace, parameters);
-
-  // Debug
-  for (std::map<std::string, bool>::const_iterator param_it = parameters.begin(); param_it != parameters.end();
-       param_it++)
-  {
-    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << params_namespace << "/"
-                                                             << param_it->first << "' with value " << param_it->second);
-  }
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, double &value)
-{
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, value);
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
-                                                           << value);
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-         std::vector<double> &values)
-{
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, values);
-
-  if (values.empty())
-    ROS_WARN_STREAM_NAMED(parent_name, "Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'"
-                                                                                                                   ".");
-
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name
-                                                           << "' with values [" << getDebugArrayString(values) << "]");
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, int &value)
-{
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, value);
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
-                                                           << value);
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, std::size_t &value)
-{
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  int nonsigned_value;
-  nh.getParam(param_name, nonsigned_value);
-  value = nonsigned_value;
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
-                                                           << value);
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, std::string &value)
-{
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, value);
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
-                                                           << value);
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-         std::vector<std::string> &values)
-{
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, values);
-
-  if (values.empty())
-    ROS_WARN_STREAM_NAMED(parent_name, "Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'"
-                                                                                                                   ".");
-
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
-                                                           << getDebugArrayString(values));
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, ros::Duration &value)
-{
-  double temp_value;
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, temp_value);
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
-                                                           << value);
-
-  // Convert to ros::Duration
-  value = ros::Duration(temp_value);
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-         Eigen::Isometry3d &value)
-{
-  std::vector<double> values;
-
-  // Load a param
-  if (!nh.hasParam(param_name))
-  {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
-    return false;
-  }
-  nh.getParam(param_name, values);
-
-  if (values.empty())
-    ROS_WARN_STREAM_NAMED(parent_name, "Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'"
-                                                                                                                   ".");
-
-  ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name
-                                                           << "' with values [" << getDebugArrayString(values) << "]");
-
-  // Convert to Eigen::Isometry3d
-  convertDoublesToEigen(parent_name, values, value);
-
-  return true;
-}
-
-bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
-         geometry_msgs::Pose &value)
-{
-  Eigen::Isometry3d eigen_pose;
-  if (!get(parent_name, nh, param_name, eigen_pose))
-    return false;
-
-  tf::poseEigenToMsg(eigen_pose, value);
-  return true;
-}
-
-std::string getDebugArrayString(std::vector<double> values)
-{
-  std::stringstream debug_values;
-  for (std::size_t i = 0; i < values.size(); ++i)
-  {
-    debug_values << values[i] << ",";
-  }
-  return debug_values.str();
-}
-
-std::string getDebugArrayString(std::vector<std::string> values)
-{
-  std::stringstream debug_values;
-  for (std::size_t i = 0; i < values.size(); ++i)
-  {
-    debug_values << values[i] << ",";
-  }
-  return debug_values.str();
-}
-
-bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Isometry3d &transform)
-{
-  if (values.size() == 6)
-  {
-    // This version is correct RPY
-    Eigen::AngleAxisd roll_angle(values[3], Eigen::Vector3d::UnitX());
-    Eigen::AngleAxisd pitch_angle(values[4], Eigen::Vector3d::UnitY());
-    Eigen::AngleAxisd yaw_angle(values[5], Eigen::Vector3d::UnitZ());
-    Eigen::Quaternion<double> quaternion = roll_angle * pitch_angle * yaw_angle;
-
-    transform = Eigen::Translation3d(values[0], values[1], values[2]) * quaternion;
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    nh.getParam(param_name, value);
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
+                                                             << value);
 
     return true;
   }
-  else if (values.size() == 7)
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &params_namespace,
+           std::map<std::string, bool> &parameters)
   {
-    // Quaternion
-    transform = Eigen::Translation3d(values[0], values[1], values[2]) * 
-                Eigen::Quaterniond(values[3], values[4], values[5], values[6]);
+    // Load a param
+    if (!nh.hasParam(params_namespace))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameters in namespace '" << nh.getNamespace() << "/"
+                                                                              << params_namespace << "'.");
+      return false;
+    }
+    nh.getParam(params_namespace, parameters);
+
+    // Debug
+    for (std::map<std::string, bool>::const_iterator param_it = parameters.begin(); param_it != parameters.end();
+         param_it++)
+    {
+      ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << params_namespace << "/"
+                                                               << param_it->first << "' with value " << param_it->second);
+    }
+
     return true;
   }
-  else
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, double &value)
   {
-    ROS_ERROR_STREAM_NAMED(parent_name, "Invalid number of doubles provided for transform, size=" << values.size());
-    return false;
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    nh.getParam(param_name, value);
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
+                                                             << value);
+
+    return true;
   }
-}
 
-void shutdownIfError(const std::string &parent_name, std::size_t error_count)
-{
-  if (!error_count)
-    return;
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+           std::vector<double> &values)
+  {
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    nh.getParam(param_name, values);
 
-  ROS_ERROR_STREAM_NAMED(parent_name, "Missing " << error_count << " ros parameters that are required. Shutting down "
-                                                                   "to prevent undefined behaviors");
-  ros::shutdown();
-  exit(0);
-}
+    if (values.empty())
+      ROS_WARN_STREAM_NAMED(parent_name, "Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'"
+                                                                                                                     ".");
 
-}  // namespace rosparam_shortcuts
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name
+                                                             << "' with values [" << getDebugArrayString(values) << "]");
+
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, int &value)
+  {
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    nh.getParam(param_name, value);
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
+                                                             << value);
+
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, std::size_t &value)
+  {
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    int nonsigned_value;
+    nh.getParam(param_name, nonsigned_value);
+    value = nonsigned_value;
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
+                                                             << value);
+
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, std::string &value)
+  {
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    nh.getParam(param_name, value);
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
+                                                             << value);
+
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+           std::vector<std::string> &values)
+  {
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    nh.getParam(param_name, values);
+
+    if (values.empty())
+      ROS_WARN_STREAM_NAMED(parent_name, "Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'"
+                                                                                                                     ".");
+
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
+                                                             << getDebugArrayString(values));
+
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name, ros::Duration &value)
+  {
+    double temp_value;
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    nh.getParam(param_name, temp_value);
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name << "' with value "
+                                                             << value);
+
+    // Convert to ros::Duration
+    value = ros::Duration(temp_value);
+
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+           Eigen::Isometry3d &value)
+  {
+    std::vector<double> values;
+
+    // Load a param
+    if (!nh.hasParam(param_name))
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Missing parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    nh.getParam(param_name, values);
+
+    if (values.empty())
+      ROS_WARN_STREAM_NAMED(parent_name, "Empty vector for parameter '" << nh.getNamespace() << "/" << param_name << "'"
+                                                                                                                     ".");
+
+    ROS_DEBUG_STREAM_NAMED(parent_name, "Loaded parameter '" << nh.getNamespace() << "/" << param_name
+                                                             << "' with values [" << getDebugArrayString(values) << "]");
+
+    // Convert to Eigen::Isometry3d
+    convertDoublesToEigen(parent_name, values, value);
+
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+           geometry_msgs::Pose &value)
+  {
+    Eigen::Isometry3d eigen_pose;
+    if (!get(parent_name, nh, param_name, eigen_pose))
+      return false;
+
+    tf::poseEigenToMsg(eigen_pose, value);
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+           geometry_msgs::Vector3 &value)
+  {
+    std::vector<double> values;
+    if (!get(parent_name, nh, param_name, values))
+      return false;
+
+    if (values.size() == 3)
+    {
+      value.x = values[0];
+      value.y = values[1];
+      value.z = values[2];
+    }
+    else
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Invalid number of elements for parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    return true;
+  }
+
+  bool get(const std::string &parent_name, const ros::NodeHandle &nh, const std::string &param_name,
+           std_msgs::ColorRGBA &value)
+  {
+    std::vector<double> values;
+    if (!get(parent_name, nh, param_name, values))
+      return false;
+
+    if (values.size() == 4)
+    {
+      value.r = values[0];
+      value.g = values[1];
+      value.b = values[2];
+      value.a = values[3];
+    }
+    else
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Invalid number of elements for parameter '" << nh.getNamespace() << "/" << param_name << "'.");
+      return false;
+    }
+    return true;
+  }
+
+  std::string getDebugArrayString(std::vector<double> values)
+  {
+    std::stringstream debug_values;
+    for (std::size_t i = 0; i < values.size(); ++i)
+    {
+      debug_values << values[i] << ",";
+    }
+    return debug_values.str();
+  }
+
+  std::string getDebugArrayString(std::vector<std::string> values)
+  {
+    std::stringstream debug_values;
+    for (std::size_t i = 0; i < values.size(); ++i)
+    {
+      debug_values << values[i] << ",";
+    }
+    return debug_values.str();
+  }
+
+  bool convertDoublesToEigen(const std::string &parent_name, std::vector<double> values, Eigen::Isometry3d &transform)
+  {
+    if (values.size() == 6)
+    {
+      // This version is correct RPY
+      Eigen::AngleAxisd roll_angle(values[3], Eigen::Vector3d::UnitX());
+      Eigen::AngleAxisd pitch_angle(values[4], Eigen::Vector3d::UnitY());
+      Eigen::AngleAxisd yaw_angle(values[5], Eigen::Vector3d::UnitZ());
+      Eigen::Quaternion<double> quaternion = roll_angle * pitch_angle * yaw_angle;
+
+      transform = Eigen::Translation3d(values[0], values[1], values[2]) * quaternion;
+
+      return true;
+    }
+    else if (values.size() == 7)
+    {
+      // Quaternion
+      transform = Eigen::Translation3d(values[0], values[1], values[2]) *
+                  Eigen::Quaterniond(values[3], values[4], values[5], values[6]);
+      return true;
+    }
+    else
+    {
+      ROS_ERROR_STREAM_NAMED(parent_name, "Invalid number of doubles provided for transform, size=" << values.size());
+      return false;
+    }
+  }
+
+  void shutdownIfError(const std::string &parent_name, std::size_t error_count)
+  {
+    if (!error_count)
+      return;
+
+    ROS_ERROR_STREAM_NAMED(parent_name, "Missing " << error_count << " ros parameters that are required. Shutting down "
+                                                                     "to prevent undefined behaviors");
+    ros::shutdown();
+    exit(0);
+  }
+
+} // namespace rosparam_shortcuts
