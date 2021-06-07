@@ -8,3 +8,5 @@ example:
   param6: [2, 2, 2, 1, 0, 0, 0] # Eigen::Isometry3d - x, y, z, qw, qx, qy, qz
   param7: [1, 1, 1, 3.14, 0, 0] # geometry_msgs::Pose - x, y, z, roll, pitch, yaw
   param8: [2, 2, 2, 1, 0, 0, 0] # geometry_msgs::Pose - x, y, z, qw, qx, qy, qz
+  param9: [1, 2, 3] # geometry_msgs::Vector3 - x, y, z
+  param10: [25, 20, 200, 0.8] # std_msgs::ColorRGBA - r, g, b, a
