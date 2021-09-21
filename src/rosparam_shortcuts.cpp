@@ -44,21 +44,26 @@
 #include <rosparam_shortcuts/rosparam_shortcuts.h>
 
 // Eigen/TF conversion
+#if __has_include(<tf2_eigen/tf2_eigen.hpp>)
+#include <tf2_eigen/tf2_eigen.hpp>
+#else
 #include <tf2_eigen/tf2_eigen.h>
+#endif
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("rosparam_shortcuts");
 
 namespace {
+template <typename T>
 void declare_parameter(const rclcpp::Node::SharedPtr& node, const std::string& param_name) {
 	if (!node->has_parameter(param_name))
-		node->declare_parameter(param_name);
+		node->declare_parameter<T>(param_name);
 }
 
 template <typename T>
 bool get_parameter(const rclcpp::Node::SharedPtr& node, const std::string& param_name, T& value) {
 	rclcpp::Parameter parameter;
 	if (!node->get_parameter(param_name, parameter)) {
-		RCLCPP_ERROR_STREAM(LOGGER, "Missing parameter '" << node->get_name() << "." << param_name << "'.");
+		RCLCPP_DEBUG_STREAM(LOGGER, "Missing parameter '" << node->get_name() << "." << param_name << "'.");
 		return false;
 	}
 	try {
@@ -72,7 +77,7 @@ bool get_parameter(const rclcpp::Node::SharedPtr& node, const std::string& param
 
 template <typename T>
 bool get_internal(const rclcpp::Node::SharedPtr& node, const std::string& param_name, T& value) {
-	declare_parameter(node, param_name);
+	declare_parameter<T>(node, param_name);
 	return get_parameter(node, param_name, value);
 }
 }  // namespace
@@ -126,8 +131,10 @@ bool get(const rclcpp::Node::SharedPtr& node, const std::string& param_name, int
 
 bool get(const rclcpp::Node::SharedPtr& node, const std::string& param_name, std::size_t& value) {
 	// Load a param
-	if (!get_internal(node, param_name, value))
+	int64_t temp_value = 0;
+	if (!get_internal(node, param_name, temp_value))
 		return false;
+	value = temp_value;
 	RCLCPP_DEBUG_STREAM(LOGGER,
 	                    "Loaded parameter '" << node->get_name() << "." << param_name << "' with value " << value);
 
