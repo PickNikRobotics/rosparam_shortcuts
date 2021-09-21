@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
 	double control_rate;
 	int param1;
 	std::size_t param2;
-	rclcpp::Duration param3(0.0);
+	rclcpp::Duration param3 = rclcpp::Duration::from_nanoseconds(0.0);
 	Eigen::Isometry3d param4;
 	std::vector<double> param5;
 	Eigen::Isometry3d param6;
