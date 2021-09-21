@@ -20,7 +20,7 @@ jobs:
           - CI_NAME: clang-format
             CLANG_FORMAT_CHECK: file
             CLANG_FORMAT_VERSION: 10
-          - CI_NAME: build-and-test
+          - CI_NAME: build-and-test rolling
           - CI_NAME: build-and-test
             ROS_DISTRO: galactic
           - CI_NAME: clang-tidy
