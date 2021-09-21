@@ -1,0 +1,38 @@
+# This config uses industrial_ci (https://github.com/ros-industrial/industrial_ci.git).
+# For troubleshooting, see readme (https://github.com/ros-industrial/industrial_ci/blob/master/README.rst)
+
+name: Build and Test
+
+# This determines when this workflow is run
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - ros2
+
+jobs:
+  industrial_ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - CI_NAME: clang-format
+            CLANG_FORMAT_CHECK: file
+            CLANG_FORMAT_VERSION: 10
+          - CI_NAME: build-and-test rolling
+          - CI_NAME: build-and-test galactic
+            ROS_DISTRO: galactic
+          - CI_NAME: clang-tidy
+            CLANG_TIDY: true
+
+    env:
+      CXXFLAGS: "-Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls"
+      ROS_DISTRO: rolling
+      ROS_REPO: main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Run industrial_ci
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: "${{ matrix.env }}"
