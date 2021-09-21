@@ -20,8 +20,7 @@ This open source project was developed at [PickNik Robotics](https://picknik.ai/
 
 ## Status:
 
- * [![CI](https://github.com/PickNikRobotics/rosparam_shortcuts/actions/workflows/main.yml/badge.svg)](https://github.com/PickNikRobotics/rosparam_shortcuts/actions/workflows/main.yml)
-## Install
+ * [![Build and Test](https://github.com/PickNikRobotics/rosparam_shortcuts/actions/workflows/main.yml/badge.svg)](https://github.com/PickNikRobotics/rosparam_shortcuts/actions/workflows/main.yml)
 
 ### Ubuntu Debian
 
