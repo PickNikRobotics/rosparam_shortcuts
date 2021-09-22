@@ -27,7 +27,7 @@ jobs:
             CLANG_TIDY: true
 
     env:
-      CXXFLAGS: "-Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls"
+      CXXFLAGS: "-Werror -Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls"
       ROS_DISTRO: rolling
       ROS_REPO: main
     runs-on: ubuntu-latest
