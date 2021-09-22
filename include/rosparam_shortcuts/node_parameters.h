@@ -194,7 +194,7 @@ void NodeParameters::declareAndGet(const std::string& name, const ParamCallback&
 
 	// declare and get through ros
 	if (!node_->has_parameter(name)) {
-		node_->declare_parameter(name);
+		node_->declare_parameter<ParameterT>(name);
 	}
 
 	// set our internal state of the parameter
