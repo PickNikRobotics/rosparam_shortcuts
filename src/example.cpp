@@ -66,6 +66,8 @@ int main(int argc, char** argv)
   Eigen::Isometry3d param6;
   geometry_msgs::Pose param7;
   geometry_msgs::Pose param8;
+  geometry_msgs::Vector3 param9;
+  std_msgs::ColorRGBA param10;
 
   // Load rosparams
   ros::NodeHandle rpnh(nh, name);
@@ -79,6 +81,8 @@ int main(int argc, char** argv)
   error += !rosparam_shortcuts::get(name, rpnh, "param6", param6);              // Isometry3d param
   error += !rosparam_shortcuts::get(name, rpnh, "param7", param7);              // geometry_msgs::Pose param
   error += !rosparam_shortcuts::get(name, rpnh, "param8", param8);              // geometry_msgs::Pose param
+  error += !rosparam_shortcuts::get(name, rpnh, "param9", param9);              // geometry_msgs::Vector3 param
+  error += !rosparam_shortcuts::get(name, rpnh, "param10", param10);              // std_msgs::ColorRGBA param
   // add more parameters here to load if desired
   rosparam_shortcuts::shutdownIfError(name, error);
 
@@ -93,6 +97,8 @@ int main(int argc, char** argv)
   ROS_INFO_STREAM_NAMED(name, "param6: Translation:\n" << param6.translation());
   ROS_INFO_STREAM_NAMED(name, "param7: Pose:\n" << param7);
   ROS_INFO_STREAM_NAMED(name, "param8: Pose:\n" << param8);
+  ROS_INFO_STREAM_NAMED(name, "param9: Vector:\n" << param9);
+  ROS_INFO_STREAM_NAMED(name, "param10: ColorRGBA:\n" << param10);
   ROS_INFO_STREAM_NAMED(name, "Shutting down.");
   ros::shutdown();
 
