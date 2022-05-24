@@ -37,20 +37,98 @@
 // this package
 #include <rosparam_shortcuts/rosparam_shortcuts.h>
 
+#include <rclcpp/parameter_value.hpp>
+
 // Eigen/TF conversion
-#if __has_include(<tf2_eigen/tf2_eigen.hpp>)
 #include <tf2_eigen/tf2_eigen.hpp>
-#else
-#include <tf2_eigen/tf2_eigen.h>
-#endif
 
 static const rclcpp::Logger LOGGER = rclcpp::get_logger("rosparam_shortcuts");
 
 namespace {
+// Convert standard types to rclcpp::ParameterType
+template <typename T>
+struct rclcpp_type_converter
+{};
+
+template <>
+struct rclcpp_type_converter<bool>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BOOL;
+};
+
+template <>
+struct rclcpp_type_converter<int>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER;
+};
+
+template <>
+struct rclcpp_type_converter<int64_t>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER;
+};
+
+template <>
+struct rclcpp_type_converter<double>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE;
+};
+
+template <>
+struct rclcpp_type_converter<std::string>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_STRING;
+};
+
+template <>
+struct rclcpp_type_converter<std::vector<uint8_t>>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BYTE_ARRAY;
+};
+
+template <>
+struct rclcpp_type_converter<std::vector<bool>>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BOOL_ARRAY;
+};
+
+template <>
+struct rclcpp_type_converter<std::vector<int>>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER_ARRAY;
+};
+
+template <>
+struct rclcpp_type_converter<std::vector<int64_t>>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER_ARRAY;
+};
+
+template <>
+struct rclcpp_type_converter<std::vector<double>>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY;
+};
+
+template <>
+struct rclcpp_type_converter<std::vector<float>>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY;
+};
+
+template <>
+struct rclcpp_type_converter<std::vector<std::string>>
+{
+	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_STRING_ARRAY;
+};
+
+template <typename T>
+inline constexpr bool rclcpp_type_converter_v = rclcpp_type_converter<T>::value;
+
 template <typename T>
 void declare_parameter(const rclcpp::Node::SharedPtr& node, const std::string& param_name) {
 	if (!node->has_parameter(param_name))
-		node->declare_parameter<T>(param_name);
+		node->declare_parameter(param_name, rclcpp_type_converter_v<T>);
 }
 
 template <typename T>
