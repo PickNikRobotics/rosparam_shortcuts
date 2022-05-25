@@ -52,75 +52,51 @@ struct rclcpp_type_converter
 
 template <>
 struct rclcpp_type_converter<bool>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BOOL;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BOOL; };
 
 template <>
 struct rclcpp_type_converter<int>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER; };
 
 template <>
 struct rclcpp_type_converter<int64_t>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER; };
 
 template <>
 struct rclcpp_type_converter<double>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE; };
 
 template <>
 struct rclcpp_type_converter<std::string>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_STRING;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_STRING; };
 
 template <>
 struct rclcpp_type_converter<std::vector<uint8_t>>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BYTE_ARRAY;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BYTE_ARRAY; };
 
 template <>
 struct rclcpp_type_converter<std::vector<bool>>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BOOL_ARRAY;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_BOOL_ARRAY; };
 
 template <>
 struct rclcpp_type_converter<std::vector<int>>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER_ARRAY;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER_ARRAY; };
 
 template <>
 struct rclcpp_type_converter<std::vector<int64_t>>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER_ARRAY;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_INTEGER_ARRAY; };
 
 template <>
 struct rclcpp_type_converter<std::vector<double>>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY; };
 
 template <>
 struct rclcpp_type_converter<std::vector<float>>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_DOUBLE_ARRAY; };
 
 template <>
 struct rclcpp_type_converter<std::vector<std::string>>
-{
-	static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_STRING_ARRAY;
-};
+{ static constexpr rclcpp::ParameterType value = rclcpp::ParameterType::PARAMETER_STRING_ARRAY; };
 
 template <typename T>
 inline constexpr bool rclcpp_type_converter_v = rclcpp_type_converter<T>::value;
