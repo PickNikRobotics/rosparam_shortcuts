@@ -19,10 +19,10 @@ jobs:
         env:
           - CI_NAME: clang-format
             CLANG_FORMAT_CHECK: file
-            CLANG_FORMAT_VERSION: 10
+            CLANG_FORMAT_VERSION: 12
           - CI_NAME: build-and-test rolling
-          - CI_NAME: build-and-test galactic
-            ROS_DISTRO: galactic
+          - CI_NAME: build-and-test humble
+            ROS_DISTRO: humble
           - CI_NAME: clang-tidy
             CLANG_TIDY: true
 
