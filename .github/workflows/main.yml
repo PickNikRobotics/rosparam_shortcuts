@@ -36,6 +36,7 @@ jobs:
 
     env:
       CXXFLAGS: "-Werror -Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls"
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
 
     name: "${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}"
     runs-on: ubuntu-latest
