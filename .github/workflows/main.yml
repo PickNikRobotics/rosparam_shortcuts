@@ -17,22 +17,52 @@ jobs:
       fail-fast: false
       matrix:
         env:
-          - CI_NAME: clang-format
-            CLANG_FORMAT_CHECK: file
-            CLANG_FORMAT_VERSION: 10
-          - CI_NAME: build-and-test rolling
-          - CI_NAME: build-and-test galactic
-            ROS_DISTRO: galactic
-          - CI_NAME: clang-tidy
-            CLANG_TIDY: true
+          - ROS_DISTRO: rolling
+            ROS_REPO: main
+          - ROS_DISTRO: rolling
+            ROS_REPO: testing
+          - ROS_DISTRO: humble
+            ROS_REPO: main
+          - ROS_DISTRO: humble
+            ROS_REPO: testing
+          - ROS_DISTRO: galactic
+            ROS_REPO: main
+          - ROS_DISTRO: galactic
+            ROS_REPO: testing
 
     env:
+      BASEDIR: ${{ github.workspace }}/.work
       CXXFLAGS: "-Werror -Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls"
-      ROS_DISTRO: rolling
-      ROS_REPO: main
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+
+    name: "${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      # Run industrial_ci
-      - uses: 'ros-industrial/industrial_ci@master'
-        env: "${{ matrix.env }}"
+      # The target directory cache doesn't include the source directory because
+      # that comes from the checkout.  See "prepare target_ws for cache" task below
+      - name: cache target_ws
+        uses: pat-s/always-upload-cache@v2.1.5
+        with:
+          path: ${{ env.BASEDIR }}/target_ws
+          key: target_ws-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/CMakeLists.txt', '**/package.xml') }}-${{ github.run_id }}
+          restore-keys: |
+            target_ws-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/CMakeLists.txt', '**/package.xml') }}
+      - name: cache ccache
+        uses: pat-s/always-upload-cache@v2.1.5
+        with:
+          path: ${{ env.CCACHE_DIR }}
+          key: ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}-${{ github.sha }}-${{ github.run_id }}
+          restore-keys: |
+            ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}-${{ github.sha }}
+            ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}
+      - name: industrial_ci
+        uses: 'ros-industrial/industrial_ci@master'
+        env: ${{ matrix.env }}
+      - name: prepare target_ws for cache
+        if: always()
+        run: |
+          du -sh ${{ env.BASEDIR }}/target_ws
+          sudo find ${{ env.BASEDIR }}/target_ws -wholename '*/test_results/*' -delete
+          sudo rm -rf ${{ env.BASEDIR }}/target_ws/src
+          du -sh ${{ env.BASEDIR }}/target_ws
