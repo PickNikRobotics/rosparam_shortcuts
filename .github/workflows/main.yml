@@ -45,17 +45,17 @@ jobs:
         uses: pat-s/always-upload-cache@v2.1.5
         with:
           path: ${{ env.BASEDIR }}/target_ws
-          key: target_ws-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/CMakeLists.txt', '**/package.xml') }}-${{ github.run_id }}
+          key: target_ws-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/CMakeLists.txt', '**/package.xml') }}-${{ github.run_id }}
           restore-keys: |
-            target_ws-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/CMakeLists.txt', '**/package.xml') }}
+            target_ws-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}-${{ hashFiles('**/CMakeLists.txt', '**/package.xml') }}
       - name: cache ccache
         uses: pat-s/always-upload-cache@v2.1.5
         with:
           path: ${{ env.CCACHE_DIR }}
-          key: ccache-${{ env.CACHE_PREFIX }}-${{ github.sha }}-${{ github.run_id }}
+          key: ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}-${{ github.sha }}-${{ github.run_id }}
           restore-keys: |
-            ccache-${{ env.CACHE_PREFIX }}-${{ github.sha }}
-            ccache-${{ env.CACHE_PREFIX }}
+            ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}-${{ github.sha }}
+            ccache-${{ matrix.env.ROS_DISTRO }}-${{ matrix.env.ROS_REPO }}-${{ env.CACHE_PREFIX }}
       - name: industrial_ci
         uses: 'ros-industrial/industrial_ci@master'
         env: ${{ matrix.env }}
