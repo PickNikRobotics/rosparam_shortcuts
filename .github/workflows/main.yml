@@ -35,6 +35,7 @@ jobs:
             ROS_REPO: testing
 
     env:
+      BASEDIR: ${{ github.workspace }}/.work
       CXXFLAGS: "-Werror -Wall -Wextra -Wwrite-strings -Wunreachable-code -Wpointer-arith -Wredundant-decls"
       CCACHE_DIR: ${{ github.workspace }}/.ccache
 
